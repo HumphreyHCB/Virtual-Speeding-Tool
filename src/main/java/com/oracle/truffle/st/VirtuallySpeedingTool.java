@@ -70,12 +70,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
+            System.out.println( context.getInstrumentedNode().getSourceSection().getCharacters() );
             // is this the function call that we want to modify?
-            if ("testPrint()".equals(callSrc)) {
-              CompilerDirectives.transferToInterpreter();
+            //if ("testPrint()".equals(callSrc)) {
+            //  CompilerDirectives.transferToInterpreter();
               // notify the runtime that we will change the current execution flow
-              throw context.createUnwind(null);
-            }
+             // throw context.createUnwind(null);
+            //}
             
         }
 

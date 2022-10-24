@@ -158,6 +158,7 @@ public final class SimpleCoverageInstrument extends TruffleInstrument {
      * @param env The environment, used to get the {@link Instrumenter}
      */
     private void enable(final Env env) {
+        System.out.println("Instrument Made");
         SourceSectionFilter filter = SourceSectionFilter.newBuilder().tagIs(ExpressionTag.class).includeInternal(false).build();
         Instrumenter instrumenter = env.getInstrumenter();
         instrumenter.attachLoadSourceSectionListener(filter, new GatherSourceSectionsListener(this), true);

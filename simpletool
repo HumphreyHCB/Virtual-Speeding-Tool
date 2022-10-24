@@ -56,5 +56,8 @@ shift
 "$JAVA_HOME/bin/$LAUNCHER" \
     --jvm \
     --vm.Dtruffle.class.path.append=target/simpletool.jar \
-    --Virtually-Speeding-Tool\
+     --test-profiler\
     "$@"
+
+ #   --Virtually-Speeding-Tool\
+#    --simple-code-coverage\
