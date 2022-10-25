@@ -64,8 +64,8 @@ import com.oracle.truffle.api.instrumentation.StandardTags.StatementTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
 import com.oracle.truffle.api.source.SourceSection;
 
-@Registration(id = StatementProfilerExample.ID)
-public class StatementProfilerExample extends TruffleInstrument {
+@Registration(id = StatementProfiler.ID)
+public class StatementProfiler extends TruffleInstrument {
 
     @Option(name = "", help = "Enable Simple Coverage (default: false).", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Boolean> ENABLED = new OptionKey<>(false);
@@ -138,13 +138,13 @@ public class StatementProfilerExample extends TruffleInstrument {
 
     public interface ProfilerFrontEnd {
 
-        void onAttach(StatementProfilerExample example);
+        void onAttach(StatementProfiler example);
 
     }
 
     @Override
     protected OptionDescriptors getOptionDescriptors() {
-        return new StatementProfilerExampleOptionDescriptors();
+        return new StatementProfilerOptionDescriptors();
     }
 
     @Override

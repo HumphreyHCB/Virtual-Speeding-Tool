@@ -38,6 +38,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Custom Instrument Made");
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.tagIs(ExpressionTag.class).build();
+        
         Instrumenter instrumenter = env.getInstrumenter();
         instrumenter.attachExecutionEventFactory(filter,
                         new EventFactory(this, env));
@@ -63,20 +64,19 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
       
         @Override
         public Object onUnwind(EventContext context, VirtualFrame frame, Object info) {
-          System.out.println("function was unwinded");
-          return context.getNodeObject().getClass();
+          System.out.println("function was stoped and a new excution has started");
+          return 1;
         }
 
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
             System.out.println( context.getInstrumentedNode().getSourceSection().getCharacters() );
-            // is this the function call that we want to modify?
-            //if ("testPrint()".equals(callSrc)) {
-            //  CompilerDirectives.transferToInterpreter();
-              // notify the runtime that we will change the current execution flow
-             // throw context.createUnwind(null);
-            //}
+            if ("testPrint()".equals(callSrc)) {
+              System.out.println("function was intercepted");
+              //CompilerDirectives.transferToInterpreter();
+              //throw context.createUnwind(null);
+            }
             
         }
 

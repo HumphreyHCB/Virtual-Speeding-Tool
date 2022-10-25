@@ -106,8 +106,13 @@ function primesMain() {
     for (var i=0;i<=N;i++) { primArray.push(primes.next()); }
     if (primArray[N] != EXPECTED) { throw new Error('wrong prime found: ' + primArray[N]); }
 }
+
+
 function testPrint() {
-    return 1;
+    console.log("Printing ...")
+    console.log("Printing Done")
+    return 0;
 }
 testPrint(); 
-primesMain();
+
+//primesMain();
