@@ -29,12 +29,40 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     @Option(name = "", help = "Enable Simple Coverage (default: false).", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Boolean> ENABLED = new OptionKey<>(false);
     
+    @Option(name = "speed-up-Method", help = "Select which method you whish to be speed up", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    static final OptionKey<String> speedUpMethod = new OptionKey<>("");
+
+    @Option(name = "Percentage-of-speedUp", help = "The amount of speed up you whish to apply to the method you wish to speed up (%)", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    static final OptionKey<Integer> PercentageofspeedUp = new OptionKey<>(0);
+
+    @Option(name = "Amount-of-Slowdown", help = "The amount of time you want to slow down all methods (µs)", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    static final OptionKey<Integer> AmountofSlowdown = new OptionKey<>(0);
+    
     public static final String ID = "Virtually-Speeding-Tool";
 
-    final Set<SourceSection> coverage = new HashSet<>();
-
+    static int method_slowed_count = 0;
+    static int method_speedUp_count = 0;
+    int slowdown;
+    double speedUp;
     @Override
     protected void onCreate(final Env env) {
+
+        if (env.getOptions().get(speedUpMethod).toString().equals("")) {
+            System.out.println("A method to speed up has not been provided.");
+        }
+        if (env.getOptions().get(AmountofSlowdown).equals(0)) {
+            System.out.println("No slowdown has been provided, instrumentation will still be placed but no speeding up or slow down will occur beyond the overhead of placing the instrumentation");
+        }
+
+        try {
+            slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
+
+
         System.out.println("Custom Instrument Made");
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.tagIs(ExpressionTag.class).build();
@@ -48,7 +76,15 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
     @Override
     protected void onDispose(Env env) {       
-        System.out.println("Custom Instrument Disposed");       
+        System.out.println("Custom Instrument Disposed"); 
+        System.out.println("\n--------------------------------");
+        //System.out.println("Instrumented Program : "+env.getTruffleFile(ID));
+        System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
+        System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
+        System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
+        System.out.println("The amount of times slowed down occured : " + method_slowed_count);
+        System.out.println("The amount of times speed up occured : " + method_speedUp_count);
+        System.out.println("--------------------------------\n"); 
     }
 
     @Override
@@ -62,20 +98,29 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         public void onReturnValue(EventContext context, VirtualFrame frame, Object result) {
         }
       
-        @Override
-        public Object onUnwind(EventContext context, VirtualFrame frame, Object info) {
-          System.out.println("function was stoped and a new excution has started");
-          return 1;
-        }
 
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
-            System.out.println( context.getInstrumentedNode().getSourceSection().getCharacters() );
-            if ("testPrint()".equals(callSrc)) {
-              System.out.println("function was intercepted");
-              //CompilerDirectives.transferToInterpreter();
-              //throw context.createUnwind(null);
+
+            if ( slowdown  <= 0) {return;}
+            
+            if (callSrc.equals(speedUpMethod.toString())) {
+                method_speedUp_count++;
+                try {
+                    Thread.sleep((long) speedUp);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                method_slowed_count++;
+                try {
+                    Thread.sleep(slowdown);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
             }
             
         }
