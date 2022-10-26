@@ -44,12 +44,15 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     static int method_speedUp_count = 0;
     int slowdown;
     double speedUp;
+    String providedMethod;
+
     @Override
     protected void onCreate(final Env env) {
 
         if (env.getOptions().get(speedUpMethod).toString().equals("")) {
             System.out.println("A method to speed up has not been provided.");
         }
+        providedMethod = env.getOptions().get(speedUpMethod).toString();
         if (env.getOptions().get(AmountofSlowdown).equals(0)) {
             System.out.println("No slowdown has been provided, instrumentation will still be placed but no speeding up or slow down will occur beyond the overhead of placing the instrumentation");
         }
@@ -102,10 +105,9 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
-
             if ( slowdown  <= 0) {return;}
             
-            if (callSrc.equals(speedUpMethod.toString())) {
+            if (callSrc.equals(providedMethod)) {
                 method_speedUp_count++;
                 try {
                     Thread.sleep((long) speedUp);
