@@ -105,9 +105,12 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
+            String[] callSrcSplit = callSrc.split("[(]");
+            String[] optionsSplit = providedMethod.split("[(]");
             if ( slowdown  <= 0) {return;}
             
-            if (callSrc.equals(providedMethod)) {
+            // i dont think this can fail
+            if (callSrcSplit[0].equals(optionsSplit[0])) {
                 method_speedUp_count++;
                 try {
                     Thread.sleep((long) speedUp);
