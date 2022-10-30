@@ -33,17 +33,17 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     static final OptionKey<String> speedUpMethod = new OptionKey<>("");
 
     @Option(name = "Percentage-of-speedUp", help = "The amount of speed up you whish to apply to the method you wish to speed up (%)", category = OptionCategory.USER, stability = OptionStability.STABLE)
-    static final OptionKey<Integer> PercentageofspeedUp = new OptionKey<>(0);
+    static final OptionKey<Long> PercentageofspeedUp = new OptionKey<>(0L);
 
     @Option(name = "Amount-of-Slowdown", help = "The amount of time you want to slow down all methods (µs)", category = OptionCategory.USER, stability = OptionStability.STABLE)
-    static final OptionKey<Integer> AmountofSlowdown = new OptionKey<>(0);
+    static final OptionKey<Long> AmountofSlowdown = new OptionKey<>(0L);
     
     public static final String ID = "Virtually-Speeding-Tool";
 
     static int method_slowed_count = 0;
     static int method_speedUp_count = 0;
-    int slowdown;
-    double speedUp;
+    long slowdown;
+    long speedUp;
     String providedMethod;
 
     @Override
@@ -95,6 +95,14 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         return new VirtuallySpeedingToolOptionDescriptors();
     }
 
+    public static void busyWaitMircros (long micros) {
+        long waitUntil = System.nanoTime() + (micros * 1000);
+        while (waitUntil > System.nanoTime()) {
+            ;
+        }
+        
+    }
+
     ExecutionEventListener myListener = new ExecutionEventListener() {
 
         @Override
@@ -104,27 +112,21 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         @Override
         public void onEnter(EventContext context, VirtualFrame frame) {
+
             String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
             String[] callSrcSplit = callSrc.split("[(]");
             String[] optionsSplit = providedMethod.split("[(]");
+
             if ( slowdown  <= 0) {return;}
-            
+        
             // i dont think this can fail
             if (callSrcSplit[0].equals(optionsSplit[0])) {
                 method_speedUp_count++;
-                try {
-                    Thread.sleep((long) speedUp);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                busyWaitMircros(speedUp);
             }
             else{
                 method_slowed_count++;
-                try {
-                    Thread.sleep(slowdown);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                busyWaitMircros(slowdown);
                 
             }
             
