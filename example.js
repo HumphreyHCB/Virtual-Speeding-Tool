@@ -108,11 +108,17 @@ function primesMain() {
 }
 
 
-function testPrint() {
+function testPrint(x) {
     console.log("Printing ...")
     console.log("Printing Done")
     return 0;
 }
-testPrint(); 
+
+function test(params) {
+    testPrint();
+    testPrint(2);
+}
+testPrint();
+test(1);
 
 //primesMain();

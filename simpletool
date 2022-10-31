@@ -56,7 +56,9 @@ shift
 "$JAVA_HOME/bin/$LAUNCHER" \
     --jvm \
     --vm.Dtruffle.class.path.append=target/simpletool.jar \
-    --Virtually-Speeding-Tool\
+    --Virtually-Speeding-Tool.Percentage-of-speedUp=100 \
+    --Virtually-Speeding-Tool.speed-up-Method="console.log" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=1 \
     "$@"
 
 #    --Virtually-Speeding-Tool\
