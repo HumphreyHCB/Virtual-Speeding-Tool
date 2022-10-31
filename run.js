@@ -21,22 +21,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const benchmarksPreLoaded = {
-  Bounce: require('./bounce'),
-  CD: require('./cd'),
-  DeltaBlue: require('./deltablue'),
-  Havlak: require('./havlak'),
-  Json: require('./json'),
-  List: require('./list'),
-  Mandelbrot: require('./mandelbrot'),
-  NBody: require('./nbody'),
-  Permute: require('./permute'),
-  Queens: require('./queens'),
-  Richards: require('./richards'),
-  Sieve: require('./sieve'),
-  Storage: require('./storage'),
-  Towers: require('./towers')
-};
 
 class Run {
   constructor(name) {
@@ -48,7 +32,8 @@ class Run {
   }
 
   loadBenchmark() {
-    return benchmarksPreLoaded[this.name];
+    
+    return require('./'+ this.name);
   }
 
   reportBenchmark() {

@@ -38,6 +38,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+const { Benchmark } = require('./benchmark');
 var N = 2000;
 var EXPECTED = 17393;
 

@@ -8,3 +8,5 @@ Some CMD that can be usefull
 export PATH=<*path/to/grall*>/bin:$PATH
 
 export JAVA_HOME=<*path/to/grall*>
+
+$GRAALVM/bin/gu install nodejs
