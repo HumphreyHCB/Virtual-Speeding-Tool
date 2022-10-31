@@ -67,14 +67,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
 
         System.out.println("Custom Instrument Made");
-        SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
-        SourceSectionFilter filter = builder.tagIs(ExpressionTag.class).build();
+        //SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
+        //SourceSectionFilter filter = builder.tagIs(ExpressionTag.class).build();
         
-        Instrumenter instrumenter = env.getInstrumenter();
-        instrumenter.attachExecutionEventFactory(filter,
-                        new EventFactory(this, env));
+        //Instrumenter instrumenter = env.getInstrumenter();
+        //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));
         env.registerService(this);
-        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), myListener);
+        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), new MethodListener(slowdown, speedUp, providedMethod));
     }
 
     @Override
@@ -85,8 +84,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        System.out.println("The amount of times slowed down occured : " + method_slowed_count);
-        System.out.println("The amount of times speed up occured : " + method_speedUp_count);
+        //System.out.println("The amount of times slowed down occured : " + method_slowed_count);
+        //System.out.println("The amount of times speed up occured : " + method_speedUp_count);
         System.out.println("--------------------------------\n"); 
     }
 
@@ -103,40 +102,5 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         
     }
 
-    ExecutionEventListener myListener = new ExecutionEventListener() {
-
-        @Override
-        public void onReturnValue(EventContext context, VirtualFrame frame, Object result) {
-        }
-      
-
-        @Override
-        public void onEnter(EventContext context, VirtualFrame frame) {
-
-            String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
-            String[] callSrcSplit = callSrc.split("[(]");
-            String[] optionsSplit = providedMethod.split("[(]");
-
-            if ( slowdown  <= 0) {return;}
-        
-            // i dont think this can fail
-            if (callSrcSplit[0].equals(optionsSplit[0])) {
-                method_speedUp_count++;
-                busyWaitMircros(speedUp);
-            }
-            else{
-                method_slowed_count++;
-                busyWaitMircros(slowdown);
-                
-            }
-            
-        }
-
-        @Override
-        public void onReturnExceptional(EventContext context, VirtualFrame frame, Throwable exception) {
-            // TODO Auto-generated method stub
-            
-        }
-      };
 }
 
