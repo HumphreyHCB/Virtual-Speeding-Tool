@@ -24,11 +24,13 @@ public class MethodListener implements ExecutionEventListener{
     @Override
     public void onEnter(EventContext context, VirtualFrame frame) {
 
+        if ( slowdown  <= 0) {return;}
+        
         String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
         String[] callSrcSplit = callSrc.split("[(]");
         String[] optionsSplit = providedMethod.split("[(]");
 
-        if ( slowdown  <= 0) {return;}
+        
     
         // i dont think this can fail
         if (callSrcSplit[0].equals(optionsSplit[0])) {
