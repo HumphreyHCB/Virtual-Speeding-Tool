@@ -1,14 +1,15 @@
 package com.oracle.truffle.st;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.EventContext;
 import com.oracle.truffle.api.instrumentation.ExecutionEventListener;
 
 public class MethodListener implements ExecutionEventListener{
 
-    long slowdown;
-    long speedUp;
-    String providedMethod;
+    final long slowdown;
+    final long speedUp;
+    final String providedMethod;
     
     public MethodListener(long slowdown, long speedUp, String providedMethod){
         this.slowdown = slowdown;
@@ -24,12 +25,17 @@ public class MethodListener implements ExecutionEventListener{
     @Override
     public void onEnter(EventContext context, VirtualFrame frame) {
 
-        if ( slowdown  <= 0) {return;}
-        
+        if ( slowdown  <= 0) {    
+            return;           
+        }
+        CompilerDirectives.transferToInterpreter();
+
         String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
+
+        // awful  
         String[] callSrcSplit = callSrc.split("[(]");
         String[] optionsSplit = providedMethod.split("[(]");
-
+        // awful  
         
     
         // i dont think this can fail
