@@ -40,11 +40,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     
     public static final String ID = "Virtually-Speeding-Tool";
 
-    static int method_slowed_count = 0;
-    static int method_speedUp_count = 0;
-    long slowdown;
-    long speedUp;
-    String providedMethod;
+    MethodListener listener;
 
     @Override
     protected void onCreate(final Env env) {
@@ -52,18 +48,16 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         if (env.getOptions().get(speedUpMethod).toString().equals("")) {
             System.out.println("A method to speed up has not been provided.");
         }
-        providedMethod = env.getOptions().get(speedUpMethod).toString();
+        
         if (env.getOptions().get(AmountofSlowdown).equals(0)) {
             System.out.println("No slowdown has been provided, instrumentation will still be placed but no speeding up or slow down will occur beyond the overhead of placing the instrumentation");
         }
 
-        try {
-            slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String providedMethod = env.getOptions().get(speedUpMethod).toString();
 
-        speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
+        long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
+
+        long speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
 
 
         System.out.println("Custom Instrument Made");
@@ -73,7 +67,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //Instrumenter instrumenter = env.getInstrumenter();
         //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));
         env.registerService(this);
-        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), new MethodListener(slowdown, speedUp, providedMethod));
+        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), listener = new MethodListener(slowdown, speedUp, providedMethod));
+
     }
 
     @Override
@@ -84,8 +79,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        //System.out.println("The amount of times slowed down occured : " + method_slowed_count);
-        //System.out.println("The amount of times speed up occured : " + method_speedUp_count);
+        System.out.println("The amount of times slowed down occured : " + listener.get_slowed_count());
+        System.out.println("The amount of times speed up occured : " + listener.get_speedUp_count());
         System.out.println("--------------------------------\n"); 
     }
 
@@ -94,13 +89,6 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         return new VirtuallySpeedingToolOptionDescriptors();
     }
 
-    public static void busyWaitMircros (long micros) {
-        long waitUntil = System.nanoTime() + (micros * 1000);
-        while (waitUntil > System.nanoTime()) {
-            ;
-        }
-        
-    }
 
 }
 

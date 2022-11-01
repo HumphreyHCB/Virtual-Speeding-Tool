@@ -10,6 +10,8 @@ public class MethodListener implements ExecutionEventListener{
     final long slowdown;
     final long speedUp;
     final String providedMethod;
+    int method_speedUp_count = 0;
+    int method_slowed_count = 0;
     
     public MethodListener(long slowdown, long speedUp, String providedMethod){
         this.slowdown = slowdown;
@@ -40,11 +42,11 @@ public class MethodListener implements ExecutionEventListener{
     
         // i dont think this can fail
         if (callSrcSplit[0].equals(optionsSplit[0])) {
-            //method_speedUp_count++;
+            method_speedUp_count++;
             busyWaitMircros(speedUp);
         }
         else{
-            //method_slowed_count++;
+            method_slowed_count++;
             busyWaitMircros(slowdown);
             
         }
@@ -63,5 +65,11 @@ public class MethodListener implements ExecutionEventListener{
             ;
         }
         
+    }
+    public int get_speedUp_count() {
+        return method_speedUp_count;      
+    }
+    public int get_slowed_count() {
+        return method_speedUp_count;      
     }
 }
