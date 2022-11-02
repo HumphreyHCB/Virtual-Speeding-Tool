@@ -51,18 +51,18 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         
 
-        long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
+        final long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
 
-        long speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
+        final long speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
 
 
         System.out.println("Custom Instrument Made");
 
         //SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
-        //SourceSectionFilter filter = builder.tagIs(CallTag.class).build();
-        
+        //SourceSectionFilter filter = builder.tagIs(CallTag.class).build();        
         //Instrumenter instrumenter = env.getInstrumenter();
         //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));
+        
         env.registerService(this);
         env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), listener = new MethodListener(slowdown, speedUp, providedMethod));
 
