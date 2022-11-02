@@ -1,26 +1,14 @@
 package com.oracle.truffle.st;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.graalvm.options.OptionCategory;
 import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
-import org.graalvm.options.OptionValues;
-
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.Option;
-import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.instrumentation.EventContext;
-import com.oracle.truffle.api.instrumentation.ExecutionEventListener;
-import com.oracle.truffle.api.instrumentation.Instrumenter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
 import com.oracle.truffle.api.instrumentation.StandardTags.CallTag;
-import com.oracle.truffle.api.instrumentation.StandardTags.ExpressionTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
-import com.oracle.truffle.api.source.SourceSection;
 
 
 @Registration(id = VirtuallySpeedingTool.ID,  name = "VirtuallySpeedingTool", version = "0.1")
@@ -55,14 +43,23 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         String providedMethod = env.getOptions().get(speedUpMethod).toString();
 
+        // if the provide input contains the brackets and atugments we remove it
+        // for example myMethod(1)     -->    myMethod
+        if (providedMethod.contains("(")) {
+            providedMethod = providedMethod.substring(0,providedMethod.indexOf("("));          
+        }
+
+        
+
         long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
 
         long speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
 
 
         System.out.println("Custom Instrument Made");
+
         //SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
-        //SourceSectionFilter filter = builder.tagIs(ExpressionTag.class).build();
+        //SourceSectionFilter filter = builder.tagIs(CallTag.class).build();
         
         //Instrumenter instrumenter = env.getInstrumenter();
         //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));

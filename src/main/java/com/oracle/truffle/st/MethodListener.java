@@ -13,7 +13,7 @@ public class MethodListener implements ExecutionEventListener{
     int method_speedUp_count = 0;
     int method_slowed_count = 0;
     
-    public MethodListener(long slowdown, long speedUp, String providedMethod){
+    public MethodListener(final long slowdown, final long speedUp, final String providedMethod){
         this.slowdown = slowdown;
         this.speedUp = speedUp;
         this.providedMethod = providedMethod;
@@ -32,16 +32,9 @@ public class MethodListener implements ExecutionEventListener{
         }
         CompilerDirectives.transferToInterpreter();
 
-        String callSrc = (String) context.getInstrumentedSourceSection().getCharacters();
-
-        // awful  
-        String[] callSrcSplit = callSrc.split("[(]");
-        String[] optionsSplit = providedMethod.split("[(]");
-        // awful  
-        
-    
-        // i dont think this can fail
-        if (callSrcSplit[0].equals(optionsSplit[0])) {
+        System.out.println(context.getInstrumentedSourceSection().getCharacters().toString());
+        // get the current method that has been callsed and check is starts with the provided method
+        if (context.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "(")) {
             method_speedUp_count++;
             busyWaitMircros(speedUp);
         }
