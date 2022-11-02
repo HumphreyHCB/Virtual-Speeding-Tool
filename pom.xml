@@ -147,7 +147,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <finalName>simpletool</finalName>
+              <finalName>VStool</finalName>
               <artifactSet>
                 <excludes>
                   <exclude>junit:junit</exclude>
