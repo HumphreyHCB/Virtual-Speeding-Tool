@@ -39,7 +39,7 @@
  * SOFTWARE.
  */
 
-const { Benchmark } = require('./benchmark');
+//const { Benchmark } = require('./benchmark');
 var N = 2000;
 var EXPECTED = 17393;
 
@@ -121,6 +121,6 @@ function test(params) {
     testPrint(2);
 }
 testPrint();
-test(1);
+//test(1);
 
 //primesMain();
