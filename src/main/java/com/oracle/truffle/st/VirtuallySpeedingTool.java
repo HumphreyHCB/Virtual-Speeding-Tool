@@ -5,10 +5,12 @@ import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import com.oracle.truffle.api.Option;
+import com.oracle.truffle.api.instrumentation.SourceFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
 import com.oracle.truffle.api.instrumentation.StandardTags.CallTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
+import com.oracle.truffle.api.source.Source;
 
 
 @Registration(id = VirtuallySpeedingTool.ID,  name = "VirtuallySpeedingTool", version = "0.1")
@@ -62,11 +64,23 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //SourceSectionFilter filter = builder.tagIs(CallTag.class).build();        
         //Instrumenter instrumenter = env.getInstrumenter();
         //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));
+
         
+        SourceFilter sf = SourceFilter.newBuilder().sourceIs((Source s) -> checkPath(s)).build();
         env.registerService(this);
-        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().tagIs(CallTag.class).build(), listener = new MethodListener(slowdown, speedUp, providedMethod));
+        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().sourceFilter(sf).tagIs(CallTag.class).build(), listener = new MethodListener(slowdown, speedUp, providedMethod));
 
     }
+
+    public boolean checkPath(Source s) {
+        if (s.getPath() == null) {
+
+        
+            return s.getName().contains("Speeding");
+        }
+        return s.getPath().contains("Speeding");
+    }
+
 
     @Override
     protected void onDispose(Env env) {       
