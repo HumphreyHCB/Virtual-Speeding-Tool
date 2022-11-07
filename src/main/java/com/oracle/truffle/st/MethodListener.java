@@ -1,6 +1,5 @@
 package com.oracle.truffle.st;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.EventContext;
 import com.oracle.truffle.api.instrumentation.ExecutionEventListener;
@@ -30,7 +29,7 @@ public class MethodListener implements ExecutionEventListener{
         if ( slowdown  <= 0) {    
             return;           
         }
-        CompilerDirectives.transferToInterpreter();
+        //CompilerDirectives.transferToInterpreter();
 
         //System.out.println(context.getInstrumentedSourceSection().getCharacters().toString());
         // get the current method that has been callsed and check is starts with the provided method
@@ -52,11 +51,12 @@ public class MethodListener implements ExecutionEventListener{
         
     }
 
-    public static void busyWaitMircros (long micros) {
-        long waitUntil = System.nanoTime() + (micros * 1000);
+    public static void busyWaitMircros (final long micros) {
+        
+         final long waitUntil = System.nanoTime() + (micros);
         while (waitUntil > System.nanoTime()) {
-            ;
-        }
+            Thread.onSpinWait();
+        }  
         
     }
     public int get_speedUp_count() {
