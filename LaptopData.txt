@@ -1,0 +1,17 @@
+node harness.js towers 10000 10
+
+towers: iterations=10000 average: 7926us total: 79256988us
+
+towers: iterations=10000 average: 6908us total: 69082666us
+
+towers: iterations=10000 average: 8496us total: 84955960us
+
+
+/VStool node harness.js towers 10000 10
+--Virtually-Speeding-Tool.Amount-of-Slowdown=0
+
+towers: iterations=10000 average: 7673us total: 76733380us
+
+towers: iterations=10000 average: 7849us total: 78493275us
+
+towers: iterations=10000 average: 7783us total: 77833444us
