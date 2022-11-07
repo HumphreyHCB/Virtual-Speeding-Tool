@@ -32,7 +32,7 @@ public class MethodListener implements ExecutionEventListener{
         }
         CompilerDirectives.transferToInterpreter();
 
-        System.out.println(context.getInstrumentedSourceSection().getCharacters().toString());
+        //System.out.println(context.getInstrumentedSourceSection().getCharacters().toString());
         // get the current method that has been callsed and check is starts with the provided method
         if (context.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "(")) {
             method_speedUp_count++;
@@ -63,6 +63,6 @@ public class MethodListener implements ExecutionEventListener{
         return method_speedUp_count;      
     }
     public int get_slowed_count() {
-        return method_speedUp_count;      
+        return method_slowed_count;      
     }
 }
