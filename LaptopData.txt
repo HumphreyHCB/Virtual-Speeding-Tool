@@ -15,3 +15,24 @@ towers: iterations=10000 average: 7673us total: 76733380us
 towers: iterations=10000 average: 7849us total: 78493275us
 
 towers: iterations=10000 average: 7783us total: 77833444us
+
+
+
+
+
+
+./VStool node harness.js towers 500 10
+towers: iterations=500 average: 32978us total: 16488912us
+
+--------------------------------
+Amount of slowness (µs) : 1µs
+Virtually speed up method : this.pushDisk()
+Percentage of speedUp (%) : 100
+The amount of times slowed down occured : 122958521
+The amount of times speed up occured : 41025000
+--------------------------------
+
+
+122958521/500 = 245,917.042
+
+41025000/500 = 82,050
