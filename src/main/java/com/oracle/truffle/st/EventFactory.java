@@ -1,45 +1,38 @@
 package com.oracle.truffle.st;
 
-import java.io.PrintStream; 
-
-import com.oracle.truffle.api.CompilerDirectives;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
-import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.EventContext;
-import com.oracle.truffle.api.instrumentation.ExecutionEventListener;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNode;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNodeFactory;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Env;
-import com.oracle.truffle.api.source.SourceSection;
 
 class EventFactory implements ExecutionEventNodeFactory {
 
 
     private final Env env;
+    private final long slowdown;
+    private final long speedUp;
+    private final String providedMethod;
 
-    EventFactory(VirtuallySpeedingTool virtuallySpeedingTool, final Env env) {
+    EventFactory(final Env env, final long slowdown, final long speedUp, final String providedMethod) {
         this.env = env;
+        this.slowdown = slowdown;
+        this.speedUp = speedUp;
+        this.providedMethod = providedMethod;
     }
 
 
     public ExecutionEventNode create(final EventContext ec) {
-        final PrintStream out = new PrintStream(env.out());
-        return new ExecutionEventNode() {
-
-            @Override
-            public void onEnter(VirtualFrame frame) {
-                String callSrc = (String) ec.getInstrumentedSourceSection().getCharacters();
-                System.out.println("Event Factory 1 " + callSrc);
-            }
-
-            @Override
-            public void onReturnValue(VirtualFrame vFrame, Object result) {
-
-            }
-
-
-        };
-
+        if ( slowdown  <= 0) {    
+            return null;           
+        }
+        if (ec.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "("))
+        {
+            return new SlowEventNode(speedUp);
+        }
+        else{
+            return new SlowEventNode(slowdown);
+        }
+        
     }
 
 }

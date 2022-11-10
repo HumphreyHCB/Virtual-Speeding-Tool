@@ -31,8 +31,6 @@ public class MethodListener implements ExecutionEventListener{
         }
         //CompilerDirectives.transferToInterpreter();
 
-        //System.out.println(context.getInstrumentedSourceSection().getCharacters().toString());
-        // get the current method that has been callsed and check is starts with the provided method
         if (context.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "(")) {
             method_speedUp_count++;
             busyWaitMircros(speedUp);
@@ -53,12 +51,13 @@ public class MethodListener implements ExecutionEventListener{
 
     public static void busyWaitMircros (final long micros) {
         
-         final long waitUntil = System.nanoTime() + (micros);
+         final long waitUntil = System.nanoTime() + (1000 * micros);
         while (waitUntil > System.nanoTime()) {
             Thread.onSpinWait();
         }  
         
     }
+    
     public int get_speedUp_count() {
         return method_speedUp_count;      
     }

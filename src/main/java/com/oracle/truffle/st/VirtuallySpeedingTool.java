@@ -5,6 +5,7 @@ import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import com.oracle.truffle.api.Option;
+import com.oracle.truffle.api.instrumentation.Instrumenter;
 import com.oracle.truffle.api.instrumentation.SourceFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
 import com.oracle.truffle.api.instrumentation.StandardTags.CallTag;
@@ -30,7 +31,6 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     
     public static final String ID = "Virtually-Speeding-Tool";
 
-    MethodListener listener;
 
     @Override
     protected void onCreate(final Env env) {
@@ -60,15 +60,18 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         System.out.println("Custom Instrument Made");
 
-        //SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
-        //SourceSectionFilter filter = builder.tagIs(CallTag.class).build();        
-        //Instrumenter instrumenter = env.getInstrumenter();
-        //instrumenter.attachExecutionEventFactory(filter,new EventFactory(this, env));
-
         
         SourceFilter sf = SourceFilter.newBuilder().sourceIs((Source s) -> checkPath(s)).build();
-        env.registerService(this);
-        env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().sourceFilter(sf).tagIs(CallTag.class).build(), listener = new MethodListener(slowdown, speedUp, providedMethod));
+
+        SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
+        SourceSectionFilter filter = builder.sourceFilter(sf).tagIs(CallTag.class).build();        
+        Instrumenter instrumenter = env.getInstrumenter();
+        instrumenter.attachExecutionEventFactory(filter,new EventFactory(env, slowdown, speedUp, providedMethod));
+
+        //env.registerService(this);
+        
+        //env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().sourceFilter(sf).tagIs(CallTag.class).build(),
+        //    listener = new MethodListener(slowdown, speedUp, providedMethod));
 
     }
 
@@ -90,8 +93,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        System.out.println("The amount of times slowed down occured : " + listener.get_slowed_count());
-        System.out.println("The amount of times speed up occured : " + listener.get_speedUp_count());
+        //System.out.println("The amount of times slowed down occured : " + listener.get_slowed_count());
+        //System.out.println("The amount of times speed up occured : " + listener.get_speedUp_count());
         System.out.println("--------------------------------\n"); 
     }
 
