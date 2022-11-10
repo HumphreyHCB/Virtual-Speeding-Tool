@@ -1,0 +1,64 @@
+node harness.js towers 10000 10
+
+towers: iterations=10000 average: 2469us total: 24691542us
+
+towers: iterations=10000 average: 2396us total: 23963320us
+
+towers: iterations=10000 average: 2215us total: 22151840us
+
+
+./VStool node harness.js towers 10000 10
+--Virtually-Speeding-Tool.Amount-of-Slowdown=0
+
+towers: iterations=10000 average: 2512us total: 25117893us
+
+towers: iterations=10000 average: 2584us total: 25843366us
+
+towers: iterations=10000 average: 2582us total: 25821480us
+
+
+
+
+towers: iterations=500 average: 18715us total: 9357720us
+
+
+--------------------------------
+Amount of slowness (µs) : 1µs
+Virtually speed up method : this.pushDisk()
+Percentage of speedUp (%) : 100
+The amount of times slowed down occured : 122958521
+The amount of times speed up occured : 41025000
+--------------------------------
+
+
+towers: iterations=10000 average: 18081us total: 180813200us
+
+
+--------------------------------
+Amount of slowness (µs) : 1µs
+Virtually speed up method : this.pushDisk()
+Percentage of speedUp (%) : 100
+The amount of times slowed down occured : -1835797275
+The amount of times speed up occured : 820500000
+
+
+
+
+amount for 1 iteration
+
+The amount of times slowed down occured : 245938
+The amount of times speed up occured : 82050
+
+
+with no speed up on a method
+towers: iterations=10000 average: 16636us total: 166355748us
+
+for one iteration 
+The amount of times slowed down occured : 327988
+
+
+
+
+2469us
+-------------------------------not-in-nano--------------------------------------------------------
+towers: iterations=500 average: 347662us total: 173831003us
