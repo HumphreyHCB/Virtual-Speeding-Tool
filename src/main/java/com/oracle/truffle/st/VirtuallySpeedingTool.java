@@ -31,7 +31,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     
     public static final String ID = "Virtually-Speeding-Tool";
 
-
+    
     @Override
     protected void onCreate(final Env env) {
 
@@ -55,7 +55,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         final long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
 
-        final long speedUp = ( env.getOptions().get(PercentageofspeedUp) / 100 ) * slowdown;
+        final long speedUp = ( 100 - env.getOptions().get(PercentageofspeedUp)) / 100  * slowdown;
 
 
         System.out.println("Custom Instrument Made");
