@@ -1,0 +1,19 @@
+The amount of times slowed down occured : 32824
+
+
+node harness.js towers 2000 1
+
+    towers: iterations=2000 average: 433us total: 866906us
+
+
+./VStool node harness.js towers 2000 1
+--Virtually-Speeding-Tool.Amount-of-Slowdown=0
+
+    towers: iterations=2000 average: 586us total: 1172480us
+
+
+
+./VStool node harness.js towers 2000 1
+--Virtually-Speeding-Tool.Amount-of-Slowdown=1
+
+    towers: iterations=2000 average: 35382us total: 70763678us

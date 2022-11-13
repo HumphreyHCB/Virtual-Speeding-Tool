@@ -58,6 +58,22 @@ The amount of times slowed down occured : 327988
 
 
 
+------------------------------------------------------------------------event node factory
+
+
+
+towers: iterations=10000 average: 18104us total: 181042868us
+
+
+Total Runtime: 181042868us
+Custom Instrument Disposed
+
+--------------------------------
+Amount of slowness (µs) : 1µs
+Virtually speed up method : 
+Percentage of speedUp (%) : 100
+
+
 
 2469us
 -------------------------------not-in-nano--------------------------------------------------------
