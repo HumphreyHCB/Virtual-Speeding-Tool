@@ -18,7 +18,7 @@ public class SlowEventNode extends ExecutionEventNode{
 
     private static void busyWaitMircros(final long micros) {
         
-        final long waitUntil = System.nanoTime() + (micros);
+    final long waitUntil = System.nanoTime() + (1000 * micros);
        while (waitUntil > System.nanoTime()) {
            Thread.onSpinWait();
        }  
