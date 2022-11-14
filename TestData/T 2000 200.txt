@@ -2,40 +2,22 @@ The amount of times slowed down occured : 32824
 for 200 inner iterations 32824 * 200 = 6,564,800
 
 
-
-
-
 node harness.js towers 1000 200
 
-
-
 towers: iterations=1000 average: 48,880us total: 48879997us
-
-
-
-
 
 ./VStool node harness.js towers 1000 200
 --Virtually-Speeding-Tool.Amount-of-Slowdown=0
 
 
-
 towers: iterations=1000 average: 49,788us total: 49788437us
-
-
-
-
 
 ./VStool node harness.js towers 50 200
 --Virtually-Speeding-Tool.Amount-of-Slowdown=1
 
 
-
 towers: iterations=50 average: 6952176us total: 347608781us
 
-
-
-
 6564800 + (OVERHEAD: 49788 - 48880 = 908) = 6,565,708
-6952176 - 6565708= 386,468
+6952176 - 6565708 = 386,468
                        5.55%

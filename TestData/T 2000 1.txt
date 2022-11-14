@@ -17,3 +17,5 @@ node harness.js towers 2000 1
 --Virtually-Speeding-Tool.Amount-of-Slowdown=1
 
     towers: iterations=2000 average: 35382us total: 70763678us
+
+        5.7%

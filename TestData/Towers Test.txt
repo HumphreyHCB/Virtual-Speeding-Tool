@@ -1,0 +1,56 @@
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="" 
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10
+
+towers: iterations=50 average: 331316us total: 16565801us
+
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="this.pushDisk()" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average: 249378us total: 12468879us
+
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="this.popDiskFrom()" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average: 250583us total: 12529147us
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="this.moveTopDisk()" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average: 250756us total: 12537788us
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="this.buildTowerAt()" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average: 331388us total: 16569383us
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="this.moveDisks()" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average: 250120us total: 12505997us
+
+
+
+
+
+
+
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average:  total: 
+
+
+./VStool node harness.js towers 50 1 
+    --Virtually-Speeding-Tool.speed-up-Method="" \
+    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+towers: iterations=50 average:  total: 
