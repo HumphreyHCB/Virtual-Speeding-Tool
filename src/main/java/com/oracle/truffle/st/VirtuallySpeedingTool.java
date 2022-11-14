@@ -31,6 +31,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     
     public static final String ID = "Virtually-Speeding-Tool";
 
+    private EventFactory eventFactory;
     
     @Override
     protected void onCreate(final Env env) {
@@ -66,7 +67,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.sourceFilter(sf).tagIs(CallTag.class).build();        
         Instrumenter instrumenter = env.getInstrumenter();
-        instrumenter.attachExecutionEventFactory(filter,new EventFactory(env, slowdown, speedUp, providedMethod));
+        instrumenter.attachExecutionEventFactory(filter,eventFactory = new EventFactory(env, slowdown, speedUp, providedMethod));
 
         //env.registerService(this);
         
@@ -93,8 +94,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        //System.out.println("The amount of times slowed down occured : " + listener.get_slowed_count());
-        //System.out.println("The amount of times speed up occured : " + listener.get_speedUp_count());
+        System.out.println("The amount of times slowed down occured : " + eventFactory.method_slowed_count);
+        System.out.println("The amount of times speed up occured : " + eventFactory.method_speedUp_count);
         System.out.println("--------------------------------\n"); 
     }
 
