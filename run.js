@@ -21,6 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+const fs = require('fs');
 
 class Run {
   constructor(name) {
@@ -37,7 +38,14 @@ class Run {
   }
 
   reportBenchmark() {
-    process.stdout.write(`${this.name}: iterations=${this.numIterations} average: ${Math.round(this.total / this.numIterations)}us total: ${Math.round(this.total)}us\n\n`);
+    const average = Math.round(this.total / this.numIterations)
+    fs.writeFile('TestData/test.txt', String(average + "\n"),{ flag: 'a' }, err => {
+      if (err) {
+        console.error(err);
+      }
+      // file written successfully
+    });
+    process.stdout.write(`${this.name}: iterations=${this.numIterations} average: ${average}us total: ${Math.round(this.total)}us\n\n`);
   }
 
   printResult(runTime) {
