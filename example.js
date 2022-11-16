@@ -31,7 +31,7 @@ class example extends Benchmark {
     }
 
     fakeprint(){
-        //this.sleep(0.0002)
+        console.log("print ");
 
     }
 
