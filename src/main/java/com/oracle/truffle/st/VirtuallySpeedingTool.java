@@ -72,7 +72,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //env.registerService(this);
         
         //env.getInstrumenter().attachExecutionEventListener(SourceSectionFilter.newBuilder().sourceFilter(sf).tagIs(CallTag.class).build(),
-        //    listener = new MethodListener(slowdown, speedUp, providedMethod));
+            // new MethodListener(slowdown, speedUp, providedMethod));
 
     }
 
@@ -94,8 +94,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        System.out.println("The amount of times slowed down occured : " + eventFactory.method_slowed_count);
-        System.out.println("The amount of times speed up occured : " + eventFactory.method_speedUp_count);
+        //System.out.println("The amount of times slowed down occured : " + eventFactory.method_slowed_count);
+        //System.out.println("The amount of times speed up occured : " + eventFactory.method_speedUp_count);
         System.out.println("--------------------------------\n"); 
     }
 
