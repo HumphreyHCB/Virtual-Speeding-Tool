@@ -4,7 +4,8 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNode;
 
 public class SlowEventNode extends ExecutionEventNode{
-    long slowdown;
+    final long slowdown;
+    volatile int counter = 0;
 
     public SlowEventNode(final long slowdown)
     {
@@ -13,16 +14,9 @@ public class SlowEventNode extends ExecutionEventNode{
 
     @Override
     public void onEnter(VirtualFrame frame) {
-        busyWaitMircros(slowdown);
+    while (counter < slowdown) {
+        counter++;
     }
-
-    private static void busyWaitMircros(final long micros) {
-        
-    final long waitUntil = System.nanoTime() + (1000 * micros);
-       while (waitUntil > System.nanoTime()) {
-           Thread.onSpinWait();
-       }  
-       
-   }
+    }
 
 }

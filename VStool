@@ -56,10 +56,13 @@ shift
 "$JAVA_HOME/bin/$LAUNCHER" \
     --jvm \
     --vm.Dtruffle.class.path.append=target/VStool.jar \
-    --Virtually-Speeding-Tool.Percentage-of-speedUp=50 \
-    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
+    --Virtually-Speeding-Tool \
     "$@"
-#    --Virtually-Speeding-Tool.speed-up-Method="" \
-#    --Virtually-Speeding-Tool\
+#        --jvm \
+#    --Virtually-Speeding-Tool.Percentage-of-speedUp=50 \
+#    --Virtually-Speeding-Tool.Amount-of-Slowdown=10\
 #    --simple-code-coverage\
 #    --test-profiler\
+
+
+#java -Dtruffle.class.path.append=target/VStool.jar JavaExample

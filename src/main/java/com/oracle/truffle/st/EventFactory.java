@@ -27,7 +27,7 @@ class EventFactory implements ExecutionEventNodeFactory {
         if ( slowdown  == 0) {    
             return null;           
         }
-
+        System.out.println(ec.getInstrumentedSourceSection().getCharacters().toString());
         //System.out.println("node object" + ec.getNodeObject());
         if (ec.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "("))
         {
