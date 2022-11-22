@@ -27,10 +27,11 @@ class EventFactory implements ExecutionEventNodeFactory {
         if ( slowdown  == 0) {    
             return null;           
         }
-        System.out.println(ec.getInstrumentedSourceSection().getCharacters().toString());
+        //System.out.println(ec.getInstrumentedNode().getRootNode().toString());
         //System.out.println("node object" + ec.getNodeObject());
-        if (ec.getInstrumentedSourceSection().getCharacters().toString().startsWith(providedMethod + "("))
+        if (ec.getInstrumentedNode().getRootNode().toString().startsWith(providedMethod))
         {
+           //System.out.println(ec.getInstrumentedNode().getRootNode().toString());
             method_speedUp_count++;
             return new SlowEventNode(speedUp);
         }
