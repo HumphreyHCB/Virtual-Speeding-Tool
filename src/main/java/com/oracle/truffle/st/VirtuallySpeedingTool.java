@@ -59,7 +59,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //final long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
 
         //final long speedUp = ( 100 - env.getOptions().get(PercentageofspeedUp)) / 100  * slowdown;
-        final long slowdown = 10000;
+        final long slowdown = 100000;
         final long speedUp = 100;
 
         System.out.println("Custom Instrument Made");

@@ -1,0 +1,7 @@
+noMethod -17406
+BubbleSort - 15435
+selectionSort - 16582
+insertionsort - 16989
+mergeSort - 17127
+quickSort - 17113
+heapSort - 16995
