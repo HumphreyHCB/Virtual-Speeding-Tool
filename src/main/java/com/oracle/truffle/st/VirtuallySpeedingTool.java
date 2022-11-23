@@ -25,7 +25,11 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
      @Option(name = "speed-up-Method", help = "Select which method you whish to be speed up", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<String> speedUpMethod = new OptionKey<>("");
 
-/*    @Option(name = "Percentage-of-speedUp", help = "The amount of speed up you whish to apply to the method you wish to speed up (%)", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    static final OptionKey<Long> slowdownamount = new OptionKey<>(10000L);
+
+
+/*   @Option(name = "Percentage-of-speedUp", help = "The amount of speed up you whish to apply to the method you wish to speed up (%)", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Long> PercentageofspeedUp = new OptionKey<>(0L);
 
     @Option(name = "Amount-of-Slowdown", help = "The amount of time you want to slow down all methods (µs)", category = OptionCategory.USER, stability = OptionStability.STABLE)
@@ -59,8 +63,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //final long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
 
         //final long speedUp = ( 100 - env.getOptions().get(PercentageofspeedUp)) / 100  * slowdown;
-        final long slowdown = 1000000;
-        final long speedUp = 100;
+        final long slowdown = env.getOptions().get(slowdownamount);
+        final long speedUp = 1000;
 
         System.out.println("Custom Instrument Made");
 
