@@ -23,7 +23,7 @@ constructor() {
     testtotal += this.selectionSort(array2)[0];
     testtotal += this.insertionSort(array3)[0];
     testtotal += this.mergeSort(array4)[0];
-    //testtotal += this.quickSort(array5, 0, 500)[0];
+    testtotal += this.quickSort(array5, 0, array5.length -1)[0];
     testtotal += this.heapSort(array6)[0];
      // the array contains a 1, and not 0
     // so the first element for a sorted array should always be 1
@@ -32,7 +32,7 @@ constructor() {
 
   verifyResult(result) {
 
-    return 5 === result;
+    return 6 === result;
   }
 
 
