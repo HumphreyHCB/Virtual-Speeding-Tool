@@ -28,28 +28,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Long> slowdownamount = new OptionKey<>(1000L);
 
-
-/*   @Option(name = "Percentage-of-speedUp", help = "The amount of speed up you whish to apply to the method you wish to speed up (%)", category = OptionCategory.USER, stability = OptionStability.STABLE)
-    static final OptionKey<Long> PercentageofspeedUp = new OptionKey<>(0L);
-
-    @Option(name = "Amount-of-Slowdown", help = "The amount of time you want to slow down all methods (µs)", category = OptionCategory.USER, stability = OptionStability.STABLE)
-    static final OptionKey<Long> AmountofSlowdown = new OptionKey<>(0L); */
-    
     public static final String ID = "Virtually-Speeding-Tool";
 
     private EventFactory eventFactory;
     
     @Override
     protected void onCreate(final Env env) {
-/* 
-        if (env.getOptions().get(speedUpMethod).toString().equals("")) {
-            System.out.println("A method to speed up has not been provided.");
-        }
-        
-        if (env.getOptions().get(AmountofSlowdown).equals(0)) {
-            System.out.println("No slowdown has been provided, instrumentation will still be placed but no speeding up or slow down will occur beyond the overhead of placing the instrumentation");
-        }
- */
+
         String providedMethod = env.getOptions().get(speedUpMethod).toString();
 
         // if the provide input contains the brackets and atugments we remove it
@@ -58,11 +43,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
             providedMethod = providedMethod.substring(0,providedMethod.indexOf("("));          
         }
 
-        
 
-        //final long slowdown = (env.getOptions().get(AmountofSlowdown).intValue());
-
-        //final long speedUp = ( 100 - env.getOptions().get(PercentageofspeedUp)) / 100  * slowdown;
         final long slowdown = env.getOptions().get(slowdownamount);
         final long speedUp = 100;
 
