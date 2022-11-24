@@ -13,11 +13,11 @@ constructor() {
   benchmark() {
 
     var testtotal = 0;
-    this.sieve1(10000)
-    this.sieve2(10000)
-    this.sieve3(10000)
-    this.sieve4(10000)
-    this.sieve5(10000)
+    //this.sieve1(10000)
+    //this.sieve2(100000)
+    //this.sieve3(100000)
+    this.sieve4(100000)
+    //this.sieve5(100000)
     return testtotal;
   }
 

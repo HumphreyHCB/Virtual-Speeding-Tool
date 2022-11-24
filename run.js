@@ -39,7 +39,7 @@ class Run {
 
   reportBenchmark() {
     const average = Math.round(this.total / this.numIterations)
-    fs.writeFile('no', String(average + "\n"),{ flag: 'a' }, err => {
+    fs.writeFile('TestData/CounterApproach/SortingDump5.txt', String(average + "\n"),{ flag: 'a' }, err => {
       if (err) {
         console.error(err);
       }
