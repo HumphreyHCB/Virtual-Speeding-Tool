@@ -17,6 +17,7 @@ public class SlowEventNode extends ExecutionEventNode{
     while (counter < slowdown) {
         counter++;
     }
+    counter = 0;
     }
 
 }
