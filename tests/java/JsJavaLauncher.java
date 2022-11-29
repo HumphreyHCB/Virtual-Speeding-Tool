@@ -12,6 +12,6 @@ public class JsJavaLauncher {
                 .allowAllAccess(true)
                 .option("Virtually-Speeding-Tool", "true")
                 .build();
-        ctx.eval("js", "let helloMain = Java.type('hello.Main'); helloMain.main(null)");
+        ctx.eval("js", "let Harness = Java.type('code.Harness'); Harness.main(['Towers','1','1'])");
     }
 }

@@ -1,3 +1,7 @@
+package code;
+
+import code.Benchmark;
+
 import java.util.function.Supplier;
 
 /* This code is based on the SOM class library.
@@ -38,19 +42,6 @@ public final class Run {
 
   private static Supplier<Benchmark> getSuiteFromName(final String name) {
     switch (name) {
-      case "Bounce":      return () -> new Bounce();
-      case "CD":          return () -> new CD();
-      case "DeltaBlue":   return () -> new DeltaBlue();
-      case "Havlak":      return () -> new Havlak();
-      case "Json":        return () -> new Json();
-      case "List":        return () -> new List();
-      case "Mandelbrot":  return () -> new Mandelbrot();
-      case "NBody":       return () -> new NBody();
-      case "Permute":     return () -> new Permute();
-      case "Queens":      return () -> new Queens();
-      case "Richards":    return () -> new Richards();
-      case "Sieve":       return () -> new Sieve();
-      case "Storage":     return () -> new Storage();
       case "Towers":      return () -> new Towers();
       default:
         throw new RuntimeException("No benchmark found with the name: " + name);
