@@ -1,2 +1,2 @@
-export PATH=/home/hb478/ProgramFiles/graalvm-ce-java19-22.3.0/bin:$PATH
-export JAVA_HOME=/home/hb478/ProgramFiles/graalvm-ce-java19-22.3.0
+export PATH=/home/hb478/ProgramFiles/graalvm-ce-java17-22.3.0/bin:$PATH
+export JAVA_HOME=/home/hb478/ProgramFiles/graalvm-ce-java17-22.3.0
