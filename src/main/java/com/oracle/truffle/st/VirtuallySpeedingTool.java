@@ -59,12 +59,15 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     }
 
     public boolean checkPath(Source s) {
-        if (s.getPath() == null) {
+        return true;
 
-        
+/*         if (s.getPath() == null) {
+
+            System.out.println(s.getName());
             return s.getName().contains("Speeding");
         }
-        return s.getPath().contains("Speeding");
+        System.out.println(s.getPath());
+        return s.getPath().contains("Speeding"); */
     }
 
 

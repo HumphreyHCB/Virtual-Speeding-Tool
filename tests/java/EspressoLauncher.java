@@ -2,25 +2,30 @@ package launchers;
 
 import code.Harness;
 
-
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
 
-class EspressoLauncher {
+public class EspressoLauncher {
     public static void main(String[] args) {
-        try(Context ctx = Context.newBuilder("js", "java")
-                .allowAllAccess(true)
+        try(Context ctx = Context.newBuilder("java", "js")
+                .option("Virtually-Speeding-Tool", "true")
                 .option("java.MultiThreaded", "false") // JS is single-threaded
+                .allowAllAccess(true)
                 .build()) {
-            Value bindings = ctx.eval("java", "<Bindings>"); // ctx.getBindings("java");
-            Harness harnessobject = Class.forName("code.Harness");
-            System.out.println(harnessobject);
-            Value harness = bindings.getMember(harnessobject.getClass().getName());
-            System.out.println(harness);
-            System.out.println(harness.canExecute());
-            //Value main = bindings.getMember(harness.getClass());
-            //System.out.println(main.execute());
+
+
+            
+            ctx.getBindings("js").putMember("harness", new Harness());
+            System.out.println(ctx.eval("js", "harness.printUsage();"));
+            
+
+            // might be usefull later on
+            // Value harness = ctx.getBindings("js").getMember("harness");
+            // Value methods = harness.getMember("getDeclaredMethods");
+            // System.out.println(harness.getMemberKeys());        
+
+
            
         }
     }

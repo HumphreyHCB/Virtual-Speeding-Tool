@@ -14,6 +14,7 @@ public class SlowEventNode extends ExecutionEventNode{
 
     @Override
     public void onEnter(VirtualFrame frame) {
+        System.out.println("Instrumented a line");
     while (counter < slowdown) {
         counter++;
     }

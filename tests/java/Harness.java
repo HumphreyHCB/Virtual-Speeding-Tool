@@ -1,6 +1,7 @@
 package code;
 
 import code.Run;
+import org.graalvm.polyglot.*;
 /* This code is based on the SOM class library.
  *
  * Copyright (c) 2001-2016 see AUTHORS.md file
@@ -38,7 +39,8 @@ public final class Harness {
     return run;
   }
 
-  private static void printUsage() {
+  @HostAccess.Export
+  public void printUsage() {
     // Checkstyle: stop
     System.out.println("Harness [benchmark] [num-iterations [inner-iter]]");
     System.out.println();
@@ -51,7 +53,7 @@ public final class Harness {
 
   public static void main(final String[] args) {
     if (args.length < 2) {
-      printUsage();
+      new Harness().printUsage();
       System.exit(1);
     }
 
