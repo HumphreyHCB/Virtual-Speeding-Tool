@@ -10,16 +10,14 @@ public class EspressoLauncher {
     public static void main(String[] args) {
         try(Context ctx = Context.newBuilder("java", "js")
                 .option("Virtually-Speeding-Tool", "true")
-                .option("java.MultiThreaded", "false") // JS is single-threaded
+                .option("Virtually-Speeding-Tool.Slowdown-amount", "10")
                 .option("java.Classpath", "/home/hburchell/Repos/Virtual-Speeding-Tool/classes")
                 .allowAllAccess(true)
                 .build()) {
 
             Value bindings = ctx.getBindings("java");
             Value harness = bindings.getMember("code.Harness");
-            System.out.println(harness.invokeMember("main", ""));        
-
-   
+            harness.invokeMember("main", (Object) new Object[]{"Towers", "1", "1"});       
 
 
            
