@@ -17,7 +17,7 @@ public class EspressoLauncher {
 
             Value bindings = ctx.getBindings("java");
             Value harness = bindings.getMember("code.Harness");
-            System.out.println(harness);        
+            System.out.println(harness.invokeMember("main", ""));        
 
    
 
