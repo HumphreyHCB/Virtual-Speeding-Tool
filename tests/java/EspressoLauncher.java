@@ -11,22 +11,21 @@ public class EspressoLauncher {
         try(Context ctx = Context.newBuilder("java", "js")
                 .option("Virtually-Speeding-Tool", "true")
                 .option("java.MultiThreaded", "false") // JS is single-threaded
+                .option("java.Classpath", "/home/hburchell/Repos/Virtual-Speeding-Tool/classes")
                 .allowAllAccess(true)
                 .build()) {
 
+            Value bindings = ctx.getBindings("java");
+            Value harness = bindings.getMember("code.Harness");
+            System.out.println(harness);        
 
-            
-            ctx.getBindings("js").putMember("harness", new Harness());
-            System.out.println(ctx.eval("js", "harness.printUsage();"));
-            
-
-            // might be usefull later on
-            // Value harness = ctx.getBindings("js").getMember("harness");
-            // Value methods = harness.getMember("getDeclaredMethods");
-            // System.out.println(harness.getMemberKeys());        
+   
 
 
            
         }
     }
 }
+
+//ctx.getBindings("js").putMember("harness", new Harness());
+//System.out.println(ctx.eval("js", "harness.printUsage();"));
