@@ -24,14 +24,14 @@ class EventFactory implements ExecutionEventNodeFactory {
 
 
     public ExecutionEventNode create(final EventContext ec) {
+
         if ( slowdown  == 0) {    
             return null;           
         }
-        System.out.println(ec.getInstrumentedNode().getRootNode().toString());
-        //System.out.println("node object" + ec.getNodeObject());
+
         if (ec.getInstrumentedNode().getRootNode().toString().startsWith(providedMethod))
         {
-           //System.out.println(ec.getInstrumentedNode().getRootNode().toString());
+           
             method_speedUp_count++;
             return new SlowEventNode(speedUp);
         }

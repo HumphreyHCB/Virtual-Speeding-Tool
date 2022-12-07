@@ -10,9 +10,12 @@ public class EspressoLauncher {
     public static void main(String[] args) {
         try(Context ctx = Context.newBuilder("java", "js")
                 .option("Virtually-Speeding-Tool", "true")
-                .option("Virtually-Speeding-Tool.Slowdown-amount", "10")
+                .option("Virtually-Speeding-Tool.Slowdown-amount", "100")
+                .option("Virtually-Speeding-Tool.speed-up-Method", "moveDisks")
                 .option("java.Classpath", "/home/hburchell/Repos/Virtual-Speeding-Tool/classes")
+                .option("java.MultiThreaded", "false") // JS is single-threaded
                 .allowAllAccess(true)
+                .allowExperimentalOptions(true)
                 .build()) {
 
             Value bindings = ctx.getBindings("java");
