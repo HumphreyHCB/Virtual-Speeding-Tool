@@ -1,55 +1,50 @@
 package code;
 
 import code.Benchmark;
-
-import java.nio.file.*;
 import java.io.*;
-
-import java.util.function.Supplier;
-
 /* This code is based on the SOM class library.
- *
- * Copyright (c) 2001-2016 see AUTHORS.md file
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+*
+* Copyright (c) 2001-2016 see AUTHORS.md file
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the 'Software'), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 public final class Run {
-  private final String name;
-  private final Supplier<Benchmark> benchmarkSuite;
-  private int numIterations;
-  private int innerIterations;
-  private long total;
+  private final String                     name;
+  private final Class<? extends Benchmark> benchmarkSuite;
+  private int                              numIterations;
+  private int                              innerIterations;
+  private long                             total;
 
   public Run(final String name) {
     this.name = name;
     this.benchmarkSuite = getSuiteFromName(name);
-    numIterations   = 1;
+    numIterations = 1;
     innerIterations = 1;
   }
 
-  private static Supplier<Benchmark> getSuiteFromName(final String name) {
-    switch (name) {
-      case "Towers":      return () -> new Towers();
-      case "JavaExample":      return () -> new JavaExample();
-      case "sortingtest":      return () -> new sortingtest();
-      default:
-        throw new RuntimeException("*********you need to add the bench mark to Run.java *******No benchmark found with the name: " + name);
+  @SuppressWarnings("unchecked")
+  private static Class<? extends Benchmark> getSuiteFromName(final String name) {
+    try {
+      return (Class<? extends Benchmark>) Class.forName("code."+name);
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
     }
   }
 
@@ -58,7 +53,13 @@ public final class Run {
     System.out.println("Starting " + name + " benchmark ...");
     // Checkstyle: resume
 
-    doRuns(benchmarkSuite.get());
+    try {
+      doRuns(benchmarkSuite.newInstance());
+    } catch (ReflectiveOperationException | IllegalArgumentException
+        | SecurityException e) {
+      e.printStackTrace();
+      throw new RuntimeException(e);
+    }
     reportBenchmark();
 
     // Checkstyle: stop
