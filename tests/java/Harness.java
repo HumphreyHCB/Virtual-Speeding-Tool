@@ -39,7 +39,6 @@ public final class Harness {
     return run;
   }
 
-  @HostAccess.Export
   public void printUsage() {
     // Checkstyle: stop
     System.out.println("Harness [benchmark] [num-iterations [inner-iter]]");

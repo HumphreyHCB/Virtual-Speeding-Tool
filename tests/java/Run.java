@@ -2,6 +2,9 @@ package code;
 
 import code.Benchmark;
 
+import java.nio.file.*;
+import java.io.*;
+
 import java.util.function.Supplier;
 
 /* This code is based on the SOM class library.
@@ -43,8 +46,10 @@ public final class Run {
   private static Supplier<Benchmark> getSuiteFromName(final String name) {
     switch (name) {
       case "Towers":      return () -> new Towers();
+      case "JavaExample":      return () -> new JavaExample();
+      case "sortingtest":      return () -> new sortingtest();
       default:
-        throw new RuntimeException("No benchmark found with the name: " + name);
+        throw new RuntimeException("*********you need to add the bench mark to Run.java *******No benchmark found with the name: " + name);
     }
   }
 
@@ -81,6 +86,19 @@ public final class Run {
   }
 
   private void reportBenchmark() {
+    long average = (total / numIterations);
+    
+    try {
+      BufferedWriter out = new BufferedWriter(
+        new FileWriter("dump.txt", true));
+        
+        // Writing on output stream
+        out.write(average+"\n");
+        // Closing the connection
+        out.close();
+    }catch (IOException e) {
+        //exception handling left as an exercise for the reader
+    }
     // Checkstyle: stop
     System.out.println(name + ": iterations=" + numIterations +
         " average: " + (total / numIterations) + "us total: " + total + "us\n");
