@@ -1,6 +1,7 @@
 package com.oracle.truffle.st;
 
 import java.beans.Statement;
+import java.nio.file.Path;
 
 import org.graalvm.options.OptionCategory;
 import org.graalvm.options.OptionDescriptors;
@@ -53,6 +54,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
 
         
         SourceFilter sf = SourceFilter.newBuilder().sourceIs((Source s) -> checkPath(s)).build();
+
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.sourceFilter(sf).tagIs(StatementTag.class).build();        
         Instrumenter instrumenter = env.getInstrumenter();
@@ -60,15 +62,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     }
 
     public boolean checkPath(Source s) {
-
-
-         if (s.getPath() == null) {
-
-            System.out.println(s.getName());
-            return s.getName().contains("Speeding");
+            
+        //return true;
+        if (s.getPath() == null) {
+            return s.getURI().toString().contains("code");
         }
-        System.out.println(s.getPath());
-        return s.getPath().contains("Speeding"); 
+        
+        return s.getURI().toString().contains("code");  
     }
 
 
