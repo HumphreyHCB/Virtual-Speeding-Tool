@@ -1,14 +1,9 @@
 package com.oracle.truffle.st;
 
-import org.graalvm.polyglot.PolyglotException;
-import org.graalvm.polyglot.PolyglotException.StackFrame;
-import org.graalvm.polyglot.Context;
-import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.instrumentation.EventContext;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNode;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNodeFactory;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Env;
-import com.oracle.truffle.api.nodes.Node;
 
 
 class EventFactory implements ExecutionEventNodeFactory {
@@ -34,21 +29,6 @@ class EventFactory implements ExecutionEventNodeFactory {
         if ( slowdown  == 0) {    
             return null;           
         }
-        //System.out.println(getCurrentLocation().getRootName());
-        //System.out.println(getCurrentLocation());
-
-
-        //System.out.println(getCurrentLocation().getRootName()); <-- maybe
-
-
-        //System.out.println(((Node) Truffle.getRuntime().getCallerFrame()).getEncapsulatingSourceSection().getCharacters());
-        //System.out.println(ec.getInstrumentedNode().getRootNode().toString());
-        //System.out.println(ec.getInstrumentedSourceSection().getCharacters().toString());
-        //System.out.println(ec.getInstrumentedNode().toString());
-        //System.out.println(ec.getInstrumentedNode().getParent().toString());
-        //System.out.println(ec.getNodeObject().getClass().getName());
-        //System.out.println(ec.getInstrumentedSourceSection().getSource());
-
         if (ec.getInstrumentedNode().getRootNode().toString().contains(providedMethod))
         {
            
@@ -62,15 +42,5 @@ class EventFactory implements ExecutionEventNodeFactory {
         
     }
 
-    static StackFrame getCurrentLocation() {
-
-        PolyglotException e = Context.getCurrent().asValue(new RuntimeException()).as(PolyglotException.class);
-        for (StackFrame frame: e.getPolyglotStackTrace()) {
-            if (frame.isGuestFrame()) {
-                return frame;
-            }
-        }
-        return null;
-    }
 
 }
