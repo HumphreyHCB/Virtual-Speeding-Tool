@@ -90,7 +90,7 @@ public final class Run {
     
     try {
       BufferedWriter out = new BufferedWriter(
-        new FileWriter("dump.txt", true));
+        new FileWriter("TestData/Java/dump2.txt", true));
         
         // Writing on output stream
         out.write(average+"\n");
