@@ -7,4 +7,34 @@ SIMPLETOOL_JAR="${PROJECT_ROOT_DIR}/target/VStool.jar"
 java \
     --class-path "$JAVA_CLASS_PATH_DIR" \
     "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
-    launchers.EspressoLauncher
+    launchers.EspressoLauncher 10 no-method
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 bubbleSort
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 Selectionsort
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 insertionsort
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 mergesort
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 quickSort
+
+java \
+    --class-path "$JAVA_CLASS_PATH_DIR" \
+    "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
+    launchers.EspressoLauncher 10 heapsort
