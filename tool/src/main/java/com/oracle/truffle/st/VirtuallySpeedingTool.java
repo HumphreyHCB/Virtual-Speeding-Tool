@@ -46,7 +46,6 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
             providedMethod = providedMethod.substring(0,providedMethod.indexOf("("));          
         }
 
-
         final long slowdown = env.getOptions().get(slowdownamount);
         final long speedUp = 1;
 

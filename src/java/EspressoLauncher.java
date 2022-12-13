@@ -22,7 +22,7 @@ public class EspressoLauncher {
 
             Value bindings = ctx.getBindings("java");
             Value harness = bindings.getMember("code.Harness");
-            harness.invokeMember("main", (Object) new Object[]{"sortingtest", "1000", "1"});       
+            harness.invokeMember("main", (Object) new Object[]{"badBubbles", "1000", "1"});       
 
 
            

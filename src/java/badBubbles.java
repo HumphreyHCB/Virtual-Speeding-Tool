@@ -72,7 +72,7 @@ public final class badBubbles extends Benchmark {
     
     long[] longArray = Arrays.stream(array2).mapToLong(i -> i).toArray();
     int total = 0;
-    //total+= bubbleSort(array);
+    total+= bubbleSort(array);
     total+= longbubbleSort(longArray);
     //BigIntbubbleSort(array3);
 
@@ -81,6 +81,6 @@ public final class badBubbles extends Benchmark {
 
   @Override
   public boolean verifyResult(final Object result) {
-    return result.equals(1);
+    return result.equals(2);
   }
 }
