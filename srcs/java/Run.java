@@ -91,7 +91,7 @@ public final class Run {
     
     try {
       BufferedWriter out = new BufferedWriter(
-        new FileWriter("TestData/Java/dump2.txt", true));
+        new FileWriter("TestData/Java/toolLauncherdump1.txt", true));
         
         // Writing on output stream
         out.write(average+"\n");

@@ -25,7 +25,7 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     @Option(name = "", help = "Enable Simple Coverage (default: false).", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Boolean> ENABLED = new OptionKey<>(false);
     
-     @Option(name = "speed-up-Method", help = "Select which method you whish to be speed up", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    @Option(name = "speed-up-Method", help = "Select which method you whish to be speed up", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<String> speedUpMethod = new OptionKey<>("#no-method-set#");
 
     @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
