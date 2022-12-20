@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Anatomizer {
 
@@ -30,7 +31,7 @@ public class Anatomizer {
         System.out.println("  ");
       }
 
-    public static String[] reflectMethods()
+    public static ArrayList<String> reflectMethods()
     {
         try {
 
@@ -40,16 +41,30 @@ public class Anatomizer {
             for (Method method : methods) {
                 MethodNames.add(method.getName());
             }
-            return MethodNames.toArray(new String[0]);
+            return excludeNames(removeLambdas(MethodNames));
         } catch (Exception e) {
             e.printStackTrace();
             printUsage();
-            return new String[0];
+            return new ArrayList<String>();
         } 
         
     }
 
+    private static ArrayList<String> removeLambdas(ArrayList<String> list) {
+        list.removeIf(s -> s.startsWith("lambda$"));
+        return list;
+    }
 
+    private static ArrayList<String> excludeNames(ArrayList<String> list) {
+        ArrayList<String> exclude = new ArrayList<>(
+            List.of("benchmark","verifyResult"));
+
+        for (String str : exclude) {
+            list.remove(str);
+            
+        }
+        return list;
+    }
 
     private static Class getClassFromFile(String fullClassName) throws Exception {
     URLClassLoader loader = new URLClassLoader(new URL[] {
