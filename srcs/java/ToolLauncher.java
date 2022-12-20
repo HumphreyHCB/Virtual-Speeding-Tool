@@ -2,20 +2,26 @@ package launchers;
 
 import code.Anatomizer;
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ToolLauncher {
     
     public static void main(String[] args) {
         String filename = args[0];
-
+        
         Anatomizer anatomizer = new Anatomizer(filename);
-        String[] methods = anatomizer.reflectMethods();
-        System.out.println(Arrays.toString(methods));
+        ArrayList<String> methods = anatomizer.reflectMethods();
+        methods.add(0, "#No-Method#");       
+        
+        
 
         EspressoLauncher EL = new EspressoLauncher();
-        for (String method : methods) {
-            EL.LaunchFileWithTool(filename, "10" , method);
+         for (String method : methods) {
+             EL.LaunchFileWithTool(filename, "10" , method);
         }
+
+        System.out.println(methods);
 
 
     }
