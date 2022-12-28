@@ -17,8 +17,9 @@ public class ToolLauncher {
         
 
         EspressoLauncher EL = new EspressoLauncher();
+        int slowdown = 10;
          for (String method : methods) {
-             EL.LaunchFileWithTool(filename, "10" , method);
+             EL.LaunchFileWithTool(filename, slowdown , method);
         }
 
         System.out.println(methods);
