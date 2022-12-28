@@ -10,8 +10,6 @@ import java.util.HashMap;
 import org.json.JSONObject;
 
 
-
-
 public class Reader {
     
     public HashMap<String, Integer> readtxt(String filename) {
