@@ -72,6 +72,7 @@
                 <id>copy</id>
                 <phase>process-test-classes</phase>
                 <goals>
+                  <goal>copy-dependencies</goal>
                   <goal>copy</goal>
                 </goals>
                 <configuration>
@@ -104,6 +105,13 @@
     </profile>
   </profiles>
   <dependencies>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20220924</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
