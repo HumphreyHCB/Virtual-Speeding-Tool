@@ -1,5 +1,6 @@
 package code;
 
+import tool.Benchmark;
 import java.util.Random;
 
 public class JavaExample extends Benchmark {

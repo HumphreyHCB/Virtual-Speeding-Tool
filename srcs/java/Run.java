@@ -1,6 +1,6 @@
-package code;
+package tool;
 
-import code.Benchmark;
+import tool.Benchmark;
 import java.io.*;
 /* This code is based on the SOM class library.
 *
@@ -91,7 +91,7 @@ public final class Run {
     
     try {
       BufferedWriter out = new BufferedWriter(
-        new FileWriter("TestData/Java/toolLauncherdump1.txt", true));
+        new FileWriter("TestData/Java/toolLauncherdump3.txt", true));
         
         // Writing on output stream
         out.write(average+"\n");

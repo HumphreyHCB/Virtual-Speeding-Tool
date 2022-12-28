@@ -1,6 +1,6 @@
-package code;
+package tool;
 
-import code.Run;
+import tool.Run;
 import org.graalvm.polyglot.*;
 /* This code is based on the SOM class library.
  *

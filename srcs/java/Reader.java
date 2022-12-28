@@ -1,4 +1,4 @@
-package com.mycompany.app;
+package tool;
 
 import java.io.File;  
 import java.io.FileNotFoundException; 

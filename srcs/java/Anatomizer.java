@@ -1,4 +1,4 @@
-package code;
+package tool;
 
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;

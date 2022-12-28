@@ -1,6 +1,6 @@
 package launchers;
 
-import code.Harness;
+import tool.Harness;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
@@ -40,7 +40,7 @@ public class EspressoLauncher {
             .build()) {
 
         Value bindings = ctx.getBindings("java");
-        Value harness = bindings.getMember("code.Harness");
+        Value harness = bindings.getMember("tool.Harness");
         harness.invokeMember("main", (Object) new Object[]{javaProgram, "1000", "1"});       
 
         }
