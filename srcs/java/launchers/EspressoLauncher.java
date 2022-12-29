@@ -4,6 +4,9 @@ import tool.Harness;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.json.JSONObject;
 
 
 public class EspressoLauncher {
@@ -33,7 +36,7 @@ public class EspressoLauncher {
             .option("Virtually-Speeding-Tool", "true")
             .option("Virtually-Speeding-Tool.Slowdown-amount", slowdownAmount)
             .option("Virtually-Speeding-Tool.speed-up-Method", slowdownMethod)
-            .option("java.Classpath", "/home/hburchell/Repos/Virtual-Speeding-Tool/classes")
+            .option("java.Classpath", new JSONObject(Files.readString(Path.of("env.json"))).getString("Classes-Path"))
             .option("java.MultiThreaded", "false") // JS is single-threaded
             .allowAllAccess(true)
             .allowExperimentalOptions(true)
@@ -43,6 +46,8 @@ public class EspressoLauncher {
         Value harness = bindings.getMember("tool.Harness");
         harness.invokeMember("main", (Object) new Object[]{javaProgram, "1000", "1"});       
 
+        }catch (Exception e) {
+            // TODO: handle exception
         }
     }
 }

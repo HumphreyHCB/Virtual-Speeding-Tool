@@ -1,11 +1,15 @@
 package tool;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import org.json.JSONObject;
 
 public class Anatomizer {
 
@@ -15,7 +19,12 @@ public class Anatomizer {
     public Anatomizer(String fileName){
 
         this.fileName = fileName;
-        CLASS_FOLDER = "/home/hburchell/Repos/Virtual-Speeding-Tool/classes/";
+        try {
+            CLASS_FOLDER = new JSONObject(Files.readString(Path.of("env.json"))).getString("Classes-Path");
+        } catch (Exception e) {
+            e.printStackTrace();
+              // TODO: handle exception
+          } 
     
     }
 
