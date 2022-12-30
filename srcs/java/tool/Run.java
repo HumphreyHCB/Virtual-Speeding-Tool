@@ -2,6 +2,10 @@ package tool;
 
 import tool.Benchmark;
 import java.io.*;
+import org.json.JSONObject;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /* This code is based on the SOM class library.
 *
 * Copyright (c) 2001-2016 see AUTHORS.md file
@@ -30,12 +34,14 @@ public final class Run {
   private int                              numIterations;
   private int                              innerIterations;
   private long                             total;
+  private String                           slowdownMethod;
 
-  public Run(final String name) {
+  public Run(final String name, final String slowdownMethod) {
     this.name = name;
     this.benchmarkSuite = getSuiteFromName(name);
     numIterations = 1;
     innerIterations = 1;
+    this.slowdownMethod = slowdownMethod;
   }
 
   @SuppressWarnings("unchecked")
@@ -90,11 +96,10 @@ public final class Run {
     long average = (total / numIterations);
     
     try {
-      BufferedWriter out = new BufferedWriter(
-        new FileWriter("TestData/Java/toolLauncherdump3.txt", true));
-        
+      FileWriter  out = new FileWriter(new JSONObject(Files.readString(Path.of("env.json"))).getString("write-Path"), true);
+
         // Writing on output stream
-        out.write(average+"\n");
+        out.write(new JSONObject().put(Long.toString(average), slowdownMethod).toString()+"\n");
         // Closing the connection
         out.close();
     }catch (IOException e) {

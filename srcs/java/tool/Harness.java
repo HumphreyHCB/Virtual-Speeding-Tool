@@ -27,7 +27,7 @@ import org.graalvm.polyglot.*;
 public final class Harness {
 
   private static Run processArguments(final String[] args) {
-    Run run = new Run(args[0]);
+    Run run = new Run(args[0],args[3]);
 
     if (args.length > 1) {
       run.setNumIterations(Integer.valueOf(args[1]));
@@ -41,12 +41,13 @@ public final class Harness {
 
   public void printUsage() {
     // Checkstyle: stop
-    System.out.println("Harness [benchmark] [num-iterations [inner-iter]]");
+    System.out.println("Harness [benchmark] [num-iterations [inner-iter]] [slowdown-method]");
     System.out.println();
-    System.out.println("  benchmark      - benchmark class name ");
-    System.out.println("  num-iterations - number of times to execute benchmark, default: 1");
-    System.out.println("  inner-iter     - number of times the benchmark is executed in an inner loop, ");
+    System.out.println("  benchmark       - benchmark class name ");
+    System.out.println("  num-iterations  - number of times to execute benchmark, default: 1");
+    System.out.println("  inner-iter      - number of times the benchmark is executed in an inner loop, ");
     System.out.println("                   which is measured in total, default: 1");
+    System.out.println("  slowdown-method - the method to slowdown ");
     // Checkstyle: resume
   }
 

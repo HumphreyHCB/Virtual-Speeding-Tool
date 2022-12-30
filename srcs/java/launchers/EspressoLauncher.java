@@ -44,7 +44,7 @@ public class EspressoLauncher {
 
         Value bindings = ctx.getBindings("java");
         Value harness = bindings.getMember("tool.Harness");
-        harness.invokeMember("main", (Object) new Object[]{javaProgram, "1000", "1"});       
+        harness.invokeMember("main", (Object) new Object[]{javaProgram, "1", "1", slowdownMethod});       
 
         }catch (Exception e) {
             // TODO: handle exception
