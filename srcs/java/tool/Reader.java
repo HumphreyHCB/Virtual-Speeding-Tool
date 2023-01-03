@@ -50,7 +50,7 @@ public class Reader {
 
         try {
           String str = Files.readString(Path.of(filename));
-            JSONObject jo = new JSONObject(str).getJSONObject("methods");
+            JSONObject jo = new JSONObject(str);
             Set<String> keySet = jo.keySet();
             for (String string : keySet) {
               Data.put(string, Integer.parseInt((String)jo.get(string)));
