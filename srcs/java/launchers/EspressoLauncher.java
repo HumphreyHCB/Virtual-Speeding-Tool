@@ -44,9 +44,10 @@ public class EspressoLauncher {
 
         Value bindings = ctx.getBindings("java");
         Value harness = bindings.getMember("tool.Harness");
-        harness.invokeMember("main", (Object) new Object[]{javaProgram, "1", "1", slowdownMethod});       
+        harness.invokeMember("main", (Object) new Object[]{javaProgram, "1", "1", slowdownMethod, new JSONObject(Files.readString(Path.of("env.json"))).getString("write-Path")});       
 
         }catch (Exception e) {
+            e.printStackTrace();
             // TODO: handle exception
         }
     }
