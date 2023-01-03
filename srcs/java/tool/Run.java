@@ -1,10 +1,13 @@
 package tool;
 
 import tool.Benchmark;
-import java.io.*;
-import org.json.JSONObject;
+import java.io.File;  
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
+import java.util.HashMap;
 
 /* This code is based on the SOM class library.
 *
@@ -35,13 +38,15 @@ public final class Run {
   private int                              innerIterations;
   private long                             total;
   private String                           slowdownMethod;
+  private String                           writePath;
 
-  public Run(final String name, final String slowdownMethod) {
+  public Run(final String name, final String slowdownMethod, final String writePath) {
     this.name = name;
     this.benchmarkSuite = getSuiteFromName(name);
     numIterations = 1;
     innerIterations = 1;
     this.slowdownMethod = slowdownMethod;
+    this.writePath = writePath;
   }
 
   @SuppressWarnings("unchecked")
@@ -94,15 +99,15 @@ public final class Run {
 
   private void reportBenchmark() {
     long average = (total / numIterations);
-    
     try {
-      FileWriter  out = new FileWriter(new JSONObject(Files.readString(Path.of("env.json"))).getString("write-Path"), true);
 
+      FileWriter out = new FileWriter(writePath, true);
         // Writing on output stream
-        out.write(new JSONObject().put(Long.toString(average), slowdownMethod).toString()+"\n");
+        out.write("\"" + average + "\""+ ":"+ "\""+  slowdownMethod + "\"" +",\n");
         // Closing the connection
         out.close();
-    }catch (IOException e) {
+    }catch (Exception e) {
+      e.printStackTrace();
         //exception handling left as an exercise for the reader
     }
     // Checkstyle: stop
