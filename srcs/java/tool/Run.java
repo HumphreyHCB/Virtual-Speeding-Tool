@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /* This code is based on the SOM class library.
 *
@@ -39,6 +40,7 @@ public final class Run {
   private long                             total;
   private String                           slowdownMethod;
   private String                           writePath;
+  private ArrayList<Long>               runTimes;
 
   public Run(final String name, final String slowdownMethod, final String writePath) {
     this.name = name;
@@ -47,6 +49,7 @@ public final class Run {
     innerIterations = 1;
     this.slowdownMethod = slowdownMethod;
     this.writePath = writePath;
+    runTimes = new ArrayList<Long>();
   }
 
   @SuppressWarnings("unchecked")
@@ -88,6 +91,7 @@ public final class Run {
 
     printResult(runTime);
 
+    runTimes.add(runTime);
     total += runTime;
   }
 
@@ -98,7 +102,23 @@ public final class Run {
   }
 
   private void reportBenchmark() {
-    long average = (total / numIterations);
+    for (int i = 0; i < (Math.floor(numIterations/10)); i++) {
+      runTimes.remove(i);
+    }
+
+    Long alteredtotal = total;
+    try {
+      alteredtotal = 0L;
+      for (Long i : runTimes) {
+        alteredtotal += i;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      // TODO: handle exception
+    }
+
+
+    long average = (alteredtotal / numIterations);
     try {
 
       FileWriter out = new FileWriter(writePath, true);
@@ -113,6 +133,9 @@ public final class Run {
     // Checkstyle: stop
     System.out.println(name + ": iterations=" + numIterations +
         " average: " + (total / numIterations) + "us total: " + total + "us\n");
+    System.out.println("with the first 10% of iterations have been discounted\n");
+    System.out.println(name + ": iterations=" + (numIterations - Math.floor(numIterations/10)) +
+    " average: " + average + "us total: " + alteredtotal + "us\n");
     // Checkstyle: resume
   }
 
