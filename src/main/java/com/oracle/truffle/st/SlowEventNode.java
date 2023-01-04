@@ -13,11 +13,12 @@ public class SlowEventNode extends ExecutionEventNode{
     }
 
     @Override
-    public void onEnter(VirtualFrame frame) {    
+    public void onEnter(final VirtualFrame frame) {    
+
     while (counter < slowdown) {
         counter++;
     }
-    counter = 0;
+    counter = 0; 
     }
 
 }
