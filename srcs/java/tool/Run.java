@@ -123,7 +123,7 @@ public final class Run {
 
       FileWriter out = new FileWriter(writePath, true);
         // Writing on output stream
-        out.write("\"" + average + "\""+ ":"+ "\""+  slowdownMethod + "\"" +",\n");
+        out.write("\"" + slowdownMethod + "\""+ ":"+ "\""+ average + "\"" +",\n");
         // Closing the connection
         out.close();
     }catch (Exception e) {
