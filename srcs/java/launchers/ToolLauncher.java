@@ -16,16 +16,21 @@ public class ToolLauncher {
     
     public static void main(String[] args) {
         String filename = args[0];
-        
+        String slowdown = args[1];
+        String writePath = args[2];
+
+        setWritePath(writePath);
+
         Anatomizer anatomizer = new Anatomizer(filename);
         ArrayList<String> methods = anatomizer.reflectMethods();
         methods.add(0, "#No-Method#");       
-        
+
+
         
 
         EspressoLauncher EL = new EspressoLauncher();
-        String slowdown = "10";
-         for (String method : methods) {
+        //String slowdown = "5";
+        for (String method : methods) {
              EL.LaunchFileWithTool(filename, slowdown , method);
         }
         try {
@@ -64,6 +69,22 @@ public class ToolLauncher {
         fw.write(finalFile);
   
         fw.close();
+    }
+
+    public static void setWritePath(String writePath) {
+      try {
+        String str = Files.readString(Path.of("env.json"));
+        JSONObject jo = new JSONObject(str);
+        jo.put("write-Path", writePath);
+                    
+        FileWriter file = new FileWriter("env.json");
+        file.write(jo.toString());
+        file.close();
+      } catch (Exception e) {
+        e.printStackTrace();
+        // TODO: handle exception
+      }
+      
     }
 
 
