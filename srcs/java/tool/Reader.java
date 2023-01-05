@@ -26,8 +26,7 @@ public class Reader {
     
   public static void main(String[] args) {
     
-    Reader r = new Reader();
-    HashMap<String, Long> map = r.readjson("test.json");
+    HashMap<String, Long> map = Reader.readjson(args[0]);
 
     printRawtoConsole(map);
 
@@ -120,7 +119,6 @@ public class Reader {
         tabledata[i][1] = data.get(i - 1).get(1);
       }
 
-      System.out.println("sdasdas");
       simpleTable(tabledata);
 
 
