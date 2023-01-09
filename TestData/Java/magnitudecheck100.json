@@ -1,3 +1,11 @@
-"#No-Method#":"1422722",
+{"#No-Method#":"1422722",
 "merge":"1392794",
 "swap":"1404722",
+"mergesort":"1399379",
+"partition":"1397730",
+"quickSort":"1402727",
+"heapify":"1369986",
+"bubbleSort":"778116",
+"Selectionsort":"1040248",
+"insertionsort":"1148049",
+"heapsort":"1415409"}
