@@ -169,7 +169,7 @@ public class Reader {
           columnLengths.put(i, a[i].length());
         }
       }));
-      System.out.println("columnLengths = " + columnLengths);
+      
     
       /*
        * Prepare format String
@@ -178,7 +178,7 @@ public class Reader {
       String flag = leftJustifiedRows ? "-" : "";
       columnLengths.entrySet().stream().forEach(e -> formatString.append("| %" + flag + e.getValue() + "s "));
       formatString.append("|\n");
-      System.out.println("formatString = " + formatString.toString());
+      
     
       /*
        * Print table
