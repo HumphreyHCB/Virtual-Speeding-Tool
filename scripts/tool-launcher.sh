@@ -7,4 +7,4 @@ JSON_JAR="${PROJECT_ROOT_DIR}/target/jars/json-20220924.jar"
 
 java --class-path "$JAVA_CLASS_PATH_DIR":"$JSON_JAR":. \
     "-Dtruffle.class.path.append=${SIMPLETOOL_JAR}" \
-    launchers.ToolLauncher sortingtest
+    launchers.ToolLauncher sortingtest 10 changetofilterplusnoflags.json
