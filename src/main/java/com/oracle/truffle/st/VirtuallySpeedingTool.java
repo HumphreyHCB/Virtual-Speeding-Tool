@@ -63,10 +63,10 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     public boolean checkPath(Source s) {
             
         if (s.getPath() == null) {
-            return s.getURI().toString().contains("code");
+            return s.getURI().toString().contains("code/");
         }
         
-        return s.getURI().toString().contains("code");  
+        return s.getURI().toString().contains("code/");  
     }
 
 
