@@ -41,7 +41,7 @@ public final class Harness {
 
   public void printUsage() {
     // Checkstyle: stop
-    System.out.println("Harness [benchmark] [num-iterations [inner-iter]] [slowdown-method]");
+    System.out.println("Harness [benchmark] [num-iterations [inner-iter]] [slowdown-method] [write-path]");
     System.out.println();
     System.out.println("  benchmark       - benchmark class name ");
     System.out.println("  num-iterations  - number of times to execute benchmark, default: 1");
