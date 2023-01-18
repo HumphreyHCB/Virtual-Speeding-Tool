@@ -1,8 +1,5 @@
 package com.oracle.truffle.st;
 
-import java.beans.Statement;
-import java.nio.file.Path;
-
 import org.graalvm.options.OptionCategory;
 import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
@@ -11,8 +8,6 @@ import com.oracle.truffle.api.Option;
 import com.oracle.truffle.api.instrumentation.Instrumenter;
 import com.oracle.truffle.api.instrumentation.SourceFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
-import com.oracle.truffle.api.instrumentation.StandardTags.CallTag;
-import com.oracle.truffle.api.instrumentation.StandardTags.ExpressionTag;
 import com.oracle.truffle.api.instrumentation.StandardTags.StatementTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
@@ -60,13 +55,12 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         instrumenter.attachExecutionEventFactory(filter,eventFactory = new EventFactory(env, slowdown, speedUp, providedMethod));
     }
 
-    public boolean checkPath(Source s) {
-            
+    public boolean checkPath(Source s) {   
         if (s.getPath() == null) {
-            return s.getURI().toString().contains("code");
+            return s.getURI().toString().contains("code/");
         }
         
-        return s.getURI().toString().contains("code");  
+        return s.getURI().toString().contains("code/");  
     }
 
 
