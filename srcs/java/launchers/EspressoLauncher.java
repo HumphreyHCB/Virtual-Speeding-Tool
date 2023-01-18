@@ -36,6 +36,7 @@ public class EspressoLauncher {
             .option("Virtually-Speeding-Tool", "true")
             .option("Virtually-Speeding-Tool.Slowdown-amount", slowdownAmount)
             .option("Virtually-Speeding-Tool.speed-up-Method", slowdownMethod)
+            .option("Virtually-Speeding-Tool.Line-Number", "1")
             .option("java.Classpath", new JSONObject(Files.readString(Path.of("env.json"))).getString("Classes-Path"))
             .option("java.MultiThreaded", "true")
             .option("engine.MultiTier", "true")

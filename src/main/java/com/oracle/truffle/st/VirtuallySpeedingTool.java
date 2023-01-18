@@ -24,11 +24,15 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     static final OptionKey<String> speedUpMethod = new OptionKey<>("#no-method-set#");
 
     @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
-    static final OptionKey<Long> slowdownamount = new OptionKey<>(1000L);
+    static final OptionKey<Long> slowdownamount = new OptionKey<>(10L);
+
+    @Option(name = "Line-Number", help = "PLACEHOLDER", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
+    static final OptionKey<Integer> lineNumber = new OptionKey<>(0);
+
 
     public static final String ID = "Virtually-Speeding-Tool";
 
-    private EventFactory eventFactory;
+    private MethodEventFactory eventFactory;
     
     @Override
     protected void onCreate(final Env env) {
@@ -52,7 +56,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.sourceFilter(sf).tagIs(StatementTag.class).build();        
         Instrumenter instrumenter = env.getInstrumenter();
-        instrumenter.attachExecutionEventFactory(filter,eventFactory = new EventFactory(env, slowdown, speedUp, providedMethod));
+        if (env.getOptions().get(lineNumber) == 0) {
+            instrumenter.attachExecutionEventFactory(filter,eventFactory = new MethodEventFactory(env, slowdown, speedUp, providedMethod));
+        }
+        else{
+            instrumenter.attachExecutionEventFactory(filter,new LineEventFactory(env, slowdown, speedUp, providedMethod, env.getOptions().get(lineNumber)));
+        }
+        
     }
 
     public boolean checkPath(Source s) {   

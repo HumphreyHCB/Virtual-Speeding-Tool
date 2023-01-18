@@ -6,7 +6,7 @@ import com.oracle.truffle.api.instrumentation.ExecutionEventNodeFactory;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Env;
 
 
-class EventFactory implements ExecutionEventNodeFactory {
+class MethodEventFactory implements ExecutionEventNodeFactory {
 
     private final long slowdown;
     private final long speedUp;
@@ -14,7 +14,7 @@ class EventFactory implements ExecutionEventNodeFactory {
     public int method_speedUp_count;
     public int method_slowed_count;
 
-    EventFactory(final Env env, final long slowdown, final long speedUp, final String providedMethod) {
+    MethodEventFactory(final Env env, final long slowdown, final long speedUp, final String providedMethod) {
         this.slowdown = slowdown;
         this.speedUp = speedUp;
         this.providedMethod = providedMethod;
