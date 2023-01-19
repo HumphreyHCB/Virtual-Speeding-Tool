@@ -118,7 +118,7 @@ public final class Run {
     }
 
 
-    long average = (alteredtotal / numIterations);
+    long average = (alteredtotal /  Double.valueOf((numIterations - Math.floor(numIterations/10))).longValue());
     try {
 
       FileWriter out = new FileWriter(writePath, true);
