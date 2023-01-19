@@ -34,19 +34,9 @@ class LineEventFactory implements ExecutionEventNodeFactory {
             return null;           
         }
 
-        try {
-            FileWriter out = new FileWriter("debugdump.txt", true);
-              // Writing on output stream
-              out.write(" Method: " + ec.getInstrumentedNode().getRootNode().toString()+ "line number" +ec.getInstrumentedNode().getSourceSection().getStartLine() + ",\n" );
-              // Closing the connection
-              out.close();
-          }catch (Exception e) {
-            e.printStackTrace();
-              //exception handling left as an exercise for the reader
-          }
 
         if (ec.getInstrumentedNode().getRootNode().toString().contains(providedMethod) && ec.getInstrumentedNode().getSourceSection().getStartLine() == lineNumber)
-        {        
+        {       
             method_speedUp_count++;
             return new SlowEventNode(speedUp);
         }
