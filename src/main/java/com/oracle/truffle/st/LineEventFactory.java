@@ -1,6 +1,8 @@
 package com.oracle.truffle.st;
 
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.oracle.truffle.api.instrumentation.EventContext;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNode;
@@ -10,40 +12,20 @@ import com.oracle.truffle.api.instrumentation.TruffleInstrument.Env;
 
 class LineEventFactory implements ExecutionEventNodeFactory {
 
-    private final long slowdown;
-    private final long speedUp;
-    private final String providedMethod;
-    private final int lineNumber;
-    public int method_speedUp_count;
-    public int method_slowed_count;
+    public List<CountEventNode> list;  
 
-    LineEventFactory(final Env env, final long slowdown, final long speedUp, final String providedMethod, final int lineNumber) {
-        this.slowdown = slowdown;
-        this.speedUp = speedUp;
-        this.providedMethod = providedMethod;
-        this.lineNumber = lineNumber;
-        method_slowed_count = 0;
-        method_speedUp_count = 0;
+    LineEventFactory(final Env env) {
 
+        list = new ArrayList<CountEventNode>();  
+        
     }
 
 
     public ExecutionEventNode create(final EventContext ec) {
 
-        if ( slowdown  == 0) {    
-            return null;           
-        }
-
-
-        if (ec.getInstrumentedNode().getRootNode().toString().contains(providedMethod) && ec.getInstrumentedNode().getSourceSection().getStartLine() == lineNumber)
-        {       
-            method_speedUp_count++;
-            return new SlowEventNode(speedUp);
-        }
-        else{
-            method_slowed_count++;
-            return new SlowEventNode(slowdown);
-        }
+        CountEventNode line = new CountEventNode(ec.getInstrumentedNode().getSourceSection().getStartLine());
+        list.add(line);
+        return line;
         
     }
 

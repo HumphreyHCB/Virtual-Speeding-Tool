@@ -12,9 +12,32 @@ import org.json.JSONObject;
 public class EspressoLauncher {
     public static void main(String[] args) {
 
-        new EspressoLauncher().LaunchFileWithTool(args[0],args[1], args[2], args[3]);
+        new EspressoLauncher().LaunchFilewithLineActivation(args[0]);
            
         
+    }
+
+    public void LaunchFilewithLineActivation(String javaProgram) {
+        try(Context ctx = Context.newBuilder("java", "js")
+        .option("Virtually-Speeding-Tool", "true")
+        .option("java.Classpath", new JSONObject(Files.readString(Path.of("env.json"))).getString("Classes-Path"))
+        .option("java.MultiThreaded", "true")
+        .option("engine.MultiTier", "true")
+        .option("engine.DynamicCompilationThresholds", "false")
+        .option("engine.SingleTierCompilationThreshold", "253")
+        .option("engine.CompilationFailureAction", "ExitVM")
+        .allowAllAccess(true)
+        .allowExperimentalOptions(true)
+        .build()) {
+
+    Value bindings = ctx.getBindings("java");
+    Value harness = bindings.getMember("tool.Harness");
+    harness.invokeMember("main", (Object) new Object[]{javaProgram, "1", "1", "no longer used", new JSONObject(Files.readString(Path.of("env.json"))).getString("write-Path")});       
+
+    }catch (Exception e) {
+        e.printStackTrace();
+        // TODO: handle exception
+    }
     }
 
     public void LaunchFileWithTool(String javaProgram, String slowdownAmount, String slowdownMethod) {
