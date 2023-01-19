@@ -26,6 +26,9 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Long> slowdownamount = new OptionKey<>(10L);
 
+    @Option(name = "Enable-Line-Slowdown", help = "PLACEHOLDER", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
+    static final OptionKey<Boolean> EnableLineSlowdown = new OptionKey<>(false);
+
     @Option(name = "Line-Number", help = "PLACEHOLDER", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
     static final OptionKey<Integer> lineNumber = new OptionKey<>(0);
 
@@ -56,11 +59,11 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         SourceSectionFilter.Builder builder = SourceSectionFilter.newBuilder();
         SourceSectionFilter filter = builder.sourceFilter(sf).tagIs(StatementTag.class).build();        
         Instrumenter instrumenter = env.getInstrumenter();
-        if (env.getOptions().get(lineNumber) == 0) {
-            instrumenter.attachExecutionEventFactory(filter,eventFactory = new MethodEventFactory(env, slowdown, speedUp, providedMethod));
+        if (env.getOptions().get(EnableLineSlowdown)) {
+            instrumenter.attachExecutionEventFactory(filter,new LineEventFactory(env, slowdown, speedUp, providedMethod, env.getOptions().get(lineNumber)));
         }
         else{
-            instrumenter.attachExecutionEventFactory(filter,new LineEventFactory(env, slowdown, speedUp, providedMethod, env.getOptions().get(lineNumber)));
+            instrumenter.attachExecutionEventFactory(filter,eventFactory = new MethodEventFactory(env, slowdown, speedUp, providedMethod));
         }
         
     }
@@ -82,8 +85,8 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
         //System.out.println("Amount of slowness (µs) : " + env.getOptions().get(AmountofSlowdown) + "µs");
         System.out.println("Virtually speed up method : " + env.getOptions().get(speedUpMethod));
         //System.out.println("Percentage of speedUp (%) : " + env.getOptions().get(PercentageofspeedUp));
-        System.out.println("The amount of times slowed down occured : " + eventFactory.method_slowed_count);
-        System.out.println("The amount of times speed up occured : " + eventFactory.method_speedUp_count);
+        //System.out.println("The amount of times slowed down occured : " + eventFactory.method_slowed_count);
+        //System.out.println("The amount of times speed up occured : " + eventFactory.method_speedUp_count);
         System.out.println("--------------------------------\n"); 
     }
 
