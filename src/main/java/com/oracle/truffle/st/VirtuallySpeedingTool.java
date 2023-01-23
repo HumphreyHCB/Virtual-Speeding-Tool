@@ -23,13 +23,13 @@ public final class VirtuallySpeedingTool extends TruffleInstrument {
     @Option(name = "speed-up-Method", help = "Select which method you whish to be speed up", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<String> speedUpMethod = new OptionKey<>("#no-method-set#");
 
-    @Option(name = "Slowdown-amount", help = "PLACEHOLDER", category = OptionCategory.USER, stability = OptionStability.STABLE)
+    @Option(name = "Slowdown-amount", help = "The amount in iterations you want slowdown to last for", category = OptionCategory.USER, stability = OptionStability.STABLE)
     static final OptionKey<Long> slowdownamount = new OptionKey<>(10L);
 
-    @Option(name = "Enable-Line-Slowdown", help = "PLACEHOLDER", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
+    @Option(name = "Enable-Line-Slowdown", help = "Enable the tool to slowdown lines. use *Line-Number* option to specify what line you want sped up", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
     static final OptionKey<Boolean> EnableLineSlowdown = new OptionKey<>(false);
 
-    @Option(name = "Line-Number", help = "PLACEHOLDER", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
+    @Option(name = "Line-Number", help = "The line you want o be sped up", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
     static final OptionKey<Integer> lineNumber = new OptionKey<>(0);
 
 
